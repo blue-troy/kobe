@@ -10,3 +10,6 @@ fact_caching = jsonfile
 fact_caching_connection = /var/kobe/data/cache
 forks = {{.forks}}
 timeout = {{.timeout}}
+
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=3600s
