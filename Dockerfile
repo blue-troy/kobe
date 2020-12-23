@@ -21,8 +21,30 @@ FROM alpinelinux/ansible:latest
 
 RUN apk add sshpass \
     && apk add git \
-    && apk add python3-dev \
+    && apk add cmake \
+    && apk add curl \
     && apk add g++ \
+    && apk add gcc \
+    && apk add jpeg-dev \
+    && apk add libffi-dev \
+    && apk add libjpeg \
+    && apk add make \
+    && apk add musl-dev \
+    && apk add musl \
+    && apk add postgresql-dev \
+    && apk add python3-dev \
+    && apk add tzdata \
+    && apk add zlib \
+    && apk add zlib-dev \
+    && apk add libc6-compat \
+    && apk add libc-dev \
+    && apk add alpine-sdk \
+    && apk add build-base \
+    && apk add linux-headers \
+    && apk add cython \
+    && apk add c-ares-dev \
+    && apk add gdbm \
+    && apk add libffi \
     && pip3 install netaddr \
     && pip3 install pywinrm \
     && pip3 install grpcio-tools \
