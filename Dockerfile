@@ -17,48 +17,17 @@ RUN go mod download
 COPY . .
 RUN make build_server_linux GOARCH=$GOARCH
 
-FROM alpinelinux/ansible:latest
-
-RUN apk add sshpass \
-    && apk add git \
-    && apk add cmake \
-    && apk add curl \
-    && apk add g++ \
-    && apk add gcc \
-    && apk add jpeg-dev \
-    && apk add libffi-dev \
-    && apk add libjpeg \
-    && apk add make \
-    && apk add musl-dev \
-    && apk add musl \
-    && apk add postgresql-dev \
-    && apk add python3-dev \
-    && apk add tzdata \
-    && apk add zlib \
-    && apk add zlib-dev \
-    && apk add libc6-compat \
-    && apk add libc-dev \
-    && apk add alpine-sdk \
-    && apk add build-base \
-    && apk add linux-headers \
-    && apk add cython \
-    && apk add c-ares-dev \
-    && apk add gdbm \
-    && apk add libffi \
-    && pip3 install netaddr \
-    && pip3 install pywinrm \
-    && pip3 install grpcio-tools \
-    && pip3 install grpcio
+FROM python:3.8.7-slim
 
 
-WORKDIR /tmp
-RUN git clone https://github.com/KubeOperator/KobeAnsiblePlugin.git
+RUN apt install -y sshpass
 
-WORKDIR /tmp/KobeAnsiblePlugin
-RUN mkdir -r /var/kobe/lib/ansible
-RUN cp -rf plugins /var/kobe/lib/ansible
-RUN python setup.py install
-
+RUN pip install ansible \
+    && pip install netaddr \
+    && pip install pywinrm \
+    && pip install grpcio-tools \
+    && pip install grpcio \
+    && pip install ansible-kobe-plugin
 
 WORKDIR /root
 RUN mkdir /root/.ssh  \
