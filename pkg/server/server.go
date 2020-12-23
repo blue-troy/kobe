@@ -7,23 +7,25 @@ import (
 	"github.com/KubeOperator/kobe/api"
 	"github.com/patrickmn/go-cache"
 	uuid "github.com/satori/go.uuid"
+	"io"
+	"sync"
 	"time"
 )
 
 type Kobe struct {
 	taskCache      *cache.Cache
 	inventoryCache *cache.Cache
-	chCache        *cache.Cache
 	pool           *Pool
 	resultCache    *cache.Cache
+	stdoutCache    *cache.Cache
 }
 
 func NewKobe() *Kobe {
 	return &Kobe{
 		taskCache:      cache.New(24*time.Hour, 5*time.Minute),
-		chCache:        cache.New(24*time.Hour, 5*time.Minute),
 		inventoryCache: cache.New(10*time.Minute, 5*time.Minute),
 		resultCache:    cache.New(24*time.Hour, 5*time.Minute),
+		stdoutCache:    cache.New(24*time.Hour, 5*time.Minute),
 		pool:           NewPool(),
 	}
 }
@@ -73,7 +75,7 @@ func (k *Kobe) GetInventory(ctx context.Context, req *api.GetInventoryRequest) (
 }
 
 func (k *Kobe) WatchResult(req *api.WatchRequest, server api.KobeApi_WatchResultServer) error {
-	ch, found := k.chCache.Get(req.TaskId)
+	stdout, found := k.stdoutCache.Get(req.TaskId)
 	if !found {
 		return errors.New(fmt.Sprintf("can not find task: %s", req.TaskId))
 	}
@@ -88,14 +90,21 @@ func (k *Kobe) WatchResult(req *api.WatchRequest, server api.KobeApi_WatchResult
 	if tv.Finished {
 		return errors.New(fmt.Sprintf("task: %s already finished", req.TaskId))
 	}
-	val, ok := ch.(chan []byte)
+	val, ok := stdout.(io.ReadCloser)
 	if !ok {
 		return errors.New(fmt.Sprintf("invalid cache"))
 	}
-	for buf := range val {
-		_ = server.Send(&api.WatchStream{
-			Stream: buf,
-		})
+	buf := make([]byte, 4096)
+	for {
+		nr, err := val.Read(buf)
+		if nr > 0 {
+			_ = server.Send(&api.WatchStream{
+				Stream: buf[:nr],
+			})
+		}
+		if err != nil || io.EOF == err {
+			break
+		}
 	}
 	return nil
 }
@@ -104,7 +113,6 @@ func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.Run
 	rm := RunnerManager{
 		inventoryCache: k.inventoryCache,
 	}
-	ch := make(chan []byte)
 	id := uuid.NewV4().String()
 	result := api.Result{
 		Id:        id,
@@ -116,14 +124,17 @@ func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.Run
 		Content:   "",
 	}
 	k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
-	k.chCache.Set(result.Id, ch, cache.DefaultExpiration)
 	k.inventoryCache.Set(result.Id, req.Inventory, cache.DefaultExpiration)
 	runner, err := rm.CreateAdhocRunner(req.Pattern, req.Module, req.Param)
 	if err != nil {
 		return nil, err
 	}
 	task := func() {
-		runner.Run(ch, &result)
+		wg := sync.WaitGroup{}
+		wg.Add(1)
+		stdout := runner.Run(&wg, &result)
+		k.stdoutCache.Set(result.Id, stdout, cache.DefaultExpiration)
+		wg.Wait()
 		result.Finished = true
 		result.EndTime = time.Now().Format("2006-01-02 15:04:05")
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
@@ -138,7 +149,6 @@ func (k *Kobe) RunPlaybook(ctx context.Context, req *api.RunPlaybookRequest) (*a
 	rm := RunnerManager{
 		inventoryCache: k.inventoryCache,
 	}
-	ch := make(chan []byte)
 	id := uuid.NewV4().String()
 	result := api.Result{
 		Id:        id,
@@ -151,14 +161,17 @@ func (k *Kobe) RunPlaybook(ctx context.Context, req *api.RunPlaybookRequest) (*a
 		Project:   req.Project,
 	}
 	k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
-	k.chCache.Set(result.Id, ch, cache.DefaultExpiration)
 	k.inventoryCache.Set(result.Id, req.Inventory, cache.DefaultExpiration)
 	runner, err := rm.CreatePlaybookRunner(req.Project, req.Playbook)
 	if err != nil {
 		return nil, err
 	}
 	b := func() {
-		runner.Run(ch, &result)
+		wg := sync.WaitGroup{}
+		wg.Add(1)
+		stdout := runner.Run(&wg, &result)
+		k.stdoutCache.Set(result.Id, stdout, cache.DefaultExpiration)
+		wg.Wait()
 		result.Finished = true
 		result.EndTime = time.Now().Format("2006-01-02 15:04:05")
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)

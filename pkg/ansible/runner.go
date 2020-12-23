@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"sync"
 )
 
 type PlaybookRunner struct {
@@ -25,18 +26,18 @@ type AdhocRunner struct {
 	Pattern string
 }
 
-func (a *AdhocRunner) Run(ch chan []byte, result *api.Result) {
+func (a *AdhocRunner) Run(wg *sync.WaitGroup, result *api.Result) io.ReadCloser {
 	ansiblePath, err := exec.LookPath(constant.AnsibleBinPath)
 	if err != nil {
 		result.Success = false
 		result.Message = err.Error()
-		return
+		return nil
 	}
 	inventoryProviderPath, err := exec.LookPath(constant.InventoryProviderBinPath)
 	if err != nil {
 		result.Success = false
 		result.Message = err.Error()
-		return
+		return nil
 	}
 	cmd := exec.Command(ansiblePath,
 		"-e", "host_key_checking=False",
@@ -48,22 +49,22 @@ func (a *AdhocRunner) Run(ch chan []byte, result *api.Result) {
 	cmdEnv = append(cmdEnv, fmt.Sprintf("%s=%s", constant.TaskEnvKey, result.Id))
 	cmd.Env = append(os.Environ(), cmdEnv...)
 	log.Infof("id:%s  content :%s", result.Id, cmd.String())
-	runCmd(ch, cmd, result)
+	return runCmd(wg, cmd, result)
 
 }
 
-func (p *PlaybookRunner) Run(ch chan []byte, result *api.Result) {
+func (p *PlaybookRunner) Run(wg *sync.WaitGroup, result *api.Result) io.ReadCloser {
 	ansiblePath, err := exec.LookPath(constant.AnsiblePlaybookBinPath)
 	if err != nil {
 		result.Success = false
 		result.Message = err.Error()
-		return
+		return nil
 	}
 	inventoryProviderPath, err := exec.LookPath(constant.InventoryProviderBinPath)
 	if err != nil {
 		result.Success = false
 		result.Message = err.Error()
-		return
+		return nil
 	}
 
 	cmd := exec.Command(ansiblePath,
@@ -79,46 +80,38 @@ func (p *PlaybookRunner) Run(ch chan []byte, result *api.Result) {
 	cmdEnv = append(cmdEnv, fmt.Sprintf("%s=%s", constant.TaskEnvKey, result.Id))
 	cmd.Env = append(os.Environ(), cmdEnv...)
 	log.Infof("id:%s  content :%s", result.Id, cmd.String())
-	runCmd(ch, cmd, result)
+	return runCmd(wg, cmd, result)
 }
 
-func runCmd(ch chan []byte, cmd *exec.Cmd, result *api.Result) {
+func runCmd(wg *sync.WaitGroup, cmd *exec.Cmd, result *api.Result) io.ReadCloser {
 	stderr := &bytes.Buffer{}
 	cmd.Stderr = stderr
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		result.Success = false
 		result.Message = err.Error()
-		return
+		wg.Done()
+		return nil
 	}
 	if err := cmd.Start(); err != nil {
 		result.Success = false
 		result.Message = err.Error()
-		return
+		wg.Done()
+		return nil
 	}
-	buf := make([]byte, 4096)
-	for {
-		nr, err := stdout.Read(buf)
-		if nr > 0 {
-			select {
-			case ch <- buf[:nr]:
-			default:
+	go func() {
+		if err = cmd.Wait(); err != nil {
+			b, err := ioutil.ReadAll(stderr)
+			if err != nil {
+				log.Error(err)
 			}
-		}
-		if err != nil || io.EOF == err {
-			break
-		}
-	}
-	close(ch)
-	if err = cmd.Wait(); err != nil {
-		result.Success = false
-		b, err := ioutil.ReadAll(stderr)
-		if err != nil {
-			log.Error(err)
+			result.Success = false
+			result.Message = string(b)
+			wg.Done()
 			return
 		}
-		result.Message = string(b)
-		return
-	}
-	result.Success = true
+		result.Success = true
+		wg.Done()
+	}()
+	return stdout
 }
