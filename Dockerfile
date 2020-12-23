@@ -20,6 +20,7 @@ RUN make build_server_linux GOARCH=$GOARCH
 FROM python:3.8.7-slim
 
 
+RUN apt update
 RUN apt install -y sshpass
 
 RUN pip install ansible \
