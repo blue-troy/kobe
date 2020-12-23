@@ -13,6 +13,24 @@ service KobeApi {
   rpc WatchResult(WatchRequest) returns(stream WatchStream){}
   rpc GetResult(GetResultRequest) returns(GetResultResponse){}
   rpc ListResult(ListResultRequest) returns(ListResultResponse){}
+  rpc TestHello(HelloRequest) returns(HelloResponse){}
+  rpc SetAnsibleResult(SetAnsibleResultRequest) returns(SetAnsibleResultResponse){}
+}
+
+
+message SetAnsibleResultRequest{
+  string result = 1;
+  string taskId = 2;
+}
+
+message SetAnsibleResultResponse{
+}
+
+message HelloRequest{
+  string name = 1;
+}
+message HelloResponse{
+  string name = 1;
 }
 
 message Project{

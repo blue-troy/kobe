@@ -7,19 +7,11 @@ import (
 	"github.com/KubeOperator/kobe/pkg/constant"
 	"github.com/KubeOperator/kobe/pkg/util"
 	"github.com/prometheus/common/log"
-	"github.com/spf13/viper"
 	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path"
-	"text/template"
-	"time"
-)
-
-const (
-	ansibleCfgFileName   = "ansible.cfg"
-	ansiblePluginDirName = "plugins"
 )
 
 type PlaybookRunner struct {
@@ -56,7 +48,7 @@ func (a *AdhocRunner) Run(ch chan []byte, result *api.Result) {
 	cmdEnv = append(cmdEnv, fmt.Sprintf("%s=%s", constant.TaskEnvKey, result.Id))
 	cmd.Env = append(os.Environ(), cmdEnv...)
 	log.Infof("id:%s  content :%s", result.Id, cmd.String())
-	runCmd(ch, "adhoc", cmd, result)
+	runCmd(ch, cmd, result)
 
 }
 
@@ -87,25 +79,10 @@ func (p *PlaybookRunner) Run(ch chan []byte, result *api.Result) {
 	cmdEnv = append(cmdEnv, fmt.Sprintf("%s=%s", constant.TaskEnvKey, result.Id))
 	cmd.Env = append(os.Environ(), cmdEnv...)
 	log.Infof("id:%s  content :%s", result.Id, cmd.String())
-	runCmd(ch, p.Project.Name, cmd, result)
+	runCmd(ch, cmd, result)
 }
 
-func runCmd(ch chan []byte, projectName string, cmd *exec.Cmd, result *api.Result) {
-	workPath, err := initWorkSpace(projectName)
-	if err != nil {
-		result.Message = err.Error()
-		return
-	}
-	pwd, err := os.Getwd()
-	if err != nil {
-		result.Message = err.Error()
-		return
-	}
-	os.Chdir(workPath)
-	defer func() {
-		os.Chdir(pwd)
-		result.EndTime = time.Now().String()
-	}()
+func runCmd(ch chan []byte, cmd *exec.Cmd, result *api.Result) {
 	stderr := &bytes.Buffer{}
 	cmd.Stderr = stderr
 	stdout, err := cmd.StdoutPipe()
@@ -144,50 +121,4 @@ func runCmd(ch chan []byte, projectName string, cmd *exec.Cmd, result *api.Resul
 		return
 	}
 	result.Success = true
-}
-
-func initWorkSpace(projectName string) (string, error) {
-	workPath := path.Join(constant.WorkDir, projectName)
-	if err := os.MkdirAll(workPath, 0755); err != nil {
-		return "", err
-	}
-	if err := renderConfig(workPath); err != nil {
-		return "", err
-	}
-
-	if err := initPlugin(workPath); err != nil {
-		return "", err
-	}
-	return workPath, nil
-}
-
-func renderConfig(workPath string) error {
-	tmpl := constant.AnsibleTemplateFilePath
-	file, err := os.OpenFile(path.Join(workPath, ansibleCfgFileName), os.O_CREATE|os.O_RDWR, 0755)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-	t, err := template.ParseFiles(tmpl)
-	if err != nil {
-		return err
-	}
-	data := viper.GetStringMap("ansible")
-	if err := t.Execute(file, data); err != nil {
-		return err
-	}
-	return nil
-}
-
-func initPlugin(workPath string) error {
-	projectPluginDir := path.Join(workPath, ansiblePluginDirName)
-	_, err := os.Stat(projectPluginDir)
-	if os.IsNotExist(err) {
-		if err := os.Symlink(constant.AnsiblePluginDir, path.Join(workPath, ansiblePluginDirName))
-			err != nil {
-			return err
-		}
-		return nil
-	}
-	return err
 }

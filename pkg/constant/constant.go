@@ -15,15 +15,13 @@ const (
 
 var (
 	BaseDir                 = "/var/kobe"
-	LibDir                  = path.Join(BaseDir, "lib")
 	DataDir                 = path.Join(BaseDir, "data")
 	CacheDir                = path.Join(DataDir, "cache")
 	KeyDir                  = path.Join(DataDir, "key")
 	WorkDir                 = path.Join(BaseDir, "work")
-	AnsibleLibDir           = path.Join(LibDir, "ansible")
 	ProjectDir              = path.Join(DataDir, "project")
-	AnsiblePluginDir        = path.Join(AnsibleLibDir, "plugins")
-	AnsibleTemplateFilePath = path.Join(AnsibleLibDir, "ansible.cfg.tmpl")
+	AnsibleTemplateFilePath = path.Join("/", "etc", "kobe", "ansible.cfg.tmpl")
+	AnsibleConfPath         = path.Join("/", "etc", "ansible", "ansible.cfg")
 )
 
 func Init() {

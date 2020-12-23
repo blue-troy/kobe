@@ -29,6 +29,193 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
+type SetAnsibleResultRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result string `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	TaskId string `protobuf:"bytes,2,opt,name=taskId,proto3" json:"taskId,omitempty"`
+}
+
+func (x *SetAnsibleResultRequest) Reset() {
+	*x = SetAnsibleResultRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kobe_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetAnsibleResultRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetAnsibleResultRequest) ProtoMessage() {}
+
+func (x *SetAnsibleResultRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_kobe_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetAnsibleResultRequest.ProtoReflect.Descriptor instead.
+func (*SetAnsibleResultRequest) Descriptor() ([]byte, []int) {
+	return file_kobe_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *SetAnsibleResultRequest) GetResult() string {
+	if x != nil {
+		return x.Result
+	}
+	return ""
+}
+
+func (x *SetAnsibleResultRequest) GetTaskId() string {
+	if x != nil {
+		return x.TaskId
+	}
+	return ""
+}
+
+type SetAnsibleResultResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *SetAnsibleResultResponse) Reset() {
+	*x = SetAnsibleResultResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kobe_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SetAnsibleResultResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SetAnsibleResultResponse) ProtoMessage() {}
+
+func (x *SetAnsibleResultResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_kobe_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SetAnsibleResultResponse.ProtoReflect.Descriptor instead.
+func (*SetAnsibleResultResponse) Descriptor() ([]byte, []int) {
+	return file_kobe_proto_rawDescGZIP(), []int{1}
+}
+
+type HelloRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (x *HelloRequest) Reset() {
+	*x = HelloRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kobe_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HelloRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HelloRequest) ProtoMessage() {}
+
+func (x *HelloRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_kobe_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HelloRequest.ProtoReflect.Descriptor instead.
+func (*HelloRequest) Descriptor() ([]byte, []int) {
+	return file_kobe_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *HelloRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+type HelloResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (x *HelloResponse) Reset() {
+	*x = HelloResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_kobe_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *HelloResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HelloResponse) ProtoMessage() {}
+
+func (x *HelloResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_kobe_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HelloResponse.ProtoReflect.Descriptor instead.
+func (*HelloResponse) Descriptor() ([]byte, []int) {
+	return file_kobe_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *HelloResponse) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
 type Project struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -41,7 +228,7 @@ type Project struct {
 func (x *Project) Reset() {
 	*x = Project{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[0]
+		mi := &file_kobe_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -54,7 +241,7 @@ func (x *Project) String() string {
 func (*Project) ProtoMessage() {}
 
 func (x *Project) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[0]
+	mi := &file_kobe_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -67,7 +254,7 @@ func (x *Project) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Project.ProtoReflect.Descriptor instead.
 func (*Project) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{0}
+	return file_kobe_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Project) GetName() string {
@@ -102,7 +289,7 @@ type Host struct {
 func (x *Host) Reset() {
 	*x = Host{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[1]
+		mi := &file_kobe_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -115,7 +302,7 @@ func (x *Host) String() string {
 func (*Host) ProtoMessage() {}
 
 func (x *Host) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[1]
+	mi := &file_kobe_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -128,7 +315,7 @@ func (x *Host) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Host.ProtoReflect.Descriptor instead.
 func (*Host) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{1}
+	return file_kobe_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Host) GetIp() string {
@@ -202,7 +389,7 @@ type ProxyConfig struct {
 func (x *ProxyConfig) Reset() {
 	*x = ProxyConfig{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[2]
+		mi := &file_kobe_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -215,7 +402,7 @@ func (x *ProxyConfig) String() string {
 func (*ProxyConfig) ProtoMessage() {}
 
 func (x *ProxyConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[2]
+	mi := &file_kobe_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -228,7 +415,7 @@ func (x *ProxyConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProxyConfig.ProtoReflect.Descriptor instead.
 func (*ProxyConfig) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{2}
+	return file_kobe_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ProxyConfig) GetEnable() bool {
@@ -280,7 +467,7 @@ type Group struct {
 func (x *Group) Reset() {
 	*x = Group{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[3]
+		mi := &file_kobe_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -293,7 +480,7 @@ func (x *Group) String() string {
 func (*Group) ProtoMessage() {}
 
 func (x *Group) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[3]
+	mi := &file_kobe_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -306,7 +493,7 @@ func (x *Group) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Group.ProtoReflect.Descriptor instead.
 func (*Group) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{3}
+	return file_kobe_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *Group) GetName() string {
@@ -350,7 +537,7 @@ type Inventory struct {
 func (x *Inventory) Reset() {
 	*x = Inventory{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[4]
+		mi := &file_kobe_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -363,7 +550,7 @@ func (x *Inventory) String() string {
 func (*Inventory) ProtoMessage() {}
 
 func (x *Inventory) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[4]
+	mi := &file_kobe_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -376,7 +563,7 @@ func (x *Inventory) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Inventory.ProtoReflect.Descriptor instead.
 func (*Inventory) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{4}
+	return file_kobe_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *Inventory) GetHosts() []*Host {
@@ -412,7 +599,7 @@ type CreateProjectRequest struct {
 func (x *CreateProjectRequest) Reset() {
 	*x = CreateProjectRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[5]
+		mi := &file_kobe_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -425,7 +612,7 @@ func (x *CreateProjectRequest) String() string {
 func (*CreateProjectRequest) ProtoMessage() {}
 
 func (x *CreateProjectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[5]
+	mi := &file_kobe_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -438,7 +625,7 @@ func (x *CreateProjectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateProjectRequest.ProtoReflect.Descriptor instead.
 func (*CreateProjectRequest) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{5}
+	return file_kobe_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *CreateProjectRequest) GetName() string {
@@ -466,7 +653,7 @@ type CreateProjectResponse struct {
 func (x *CreateProjectResponse) Reset() {
 	*x = CreateProjectResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[6]
+		mi := &file_kobe_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -479,7 +666,7 @@ func (x *CreateProjectResponse) String() string {
 func (*CreateProjectResponse) ProtoMessage() {}
 
 func (x *CreateProjectResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[6]
+	mi := &file_kobe_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -492,7 +679,7 @@ func (x *CreateProjectResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateProjectResponse.ProtoReflect.Descriptor instead.
 func (*CreateProjectResponse) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{6}
+	return file_kobe_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *CreateProjectResponse) GetItem() *Project {
@@ -511,7 +698,7 @@ type ListProjectRequest struct {
 func (x *ListProjectRequest) Reset() {
 	*x = ListProjectRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[7]
+		mi := &file_kobe_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -524,7 +711,7 @@ func (x *ListProjectRequest) String() string {
 func (*ListProjectRequest) ProtoMessage() {}
 
 func (x *ListProjectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[7]
+	mi := &file_kobe_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -537,7 +724,7 @@ func (x *ListProjectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProjectRequest.ProtoReflect.Descriptor instead.
 func (*ListProjectRequest) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{7}
+	return file_kobe_proto_rawDescGZIP(), []int{11}
 }
 
 type ListProjectResponse struct {
@@ -551,7 +738,7 @@ type ListProjectResponse struct {
 func (x *ListProjectResponse) Reset() {
 	*x = ListProjectResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[8]
+		mi := &file_kobe_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -564,7 +751,7 @@ func (x *ListProjectResponse) String() string {
 func (*ListProjectResponse) ProtoMessage() {}
 
 func (x *ListProjectResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[8]
+	mi := &file_kobe_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -577,7 +764,7 @@ func (x *ListProjectResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProjectResponse.ProtoReflect.Descriptor instead.
 func (*ListProjectResponse) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{8}
+	return file_kobe_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ListProjectResponse) GetItems() []*Project {
@@ -600,7 +787,7 @@ type RunPlaybookRequest struct {
 func (x *RunPlaybookRequest) Reset() {
 	*x = RunPlaybookRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[9]
+		mi := &file_kobe_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -613,7 +800,7 @@ func (x *RunPlaybookRequest) String() string {
 func (*RunPlaybookRequest) ProtoMessage() {}
 
 func (x *RunPlaybookRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[9]
+	mi := &file_kobe_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -626,7 +813,7 @@ func (x *RunPlaybookRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunPlaybookRequest.ProtoReflect.Descriptor instead.
 func (*RunPlaybookRequest) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{9}
+	return file_kobe_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *RunPlaybookRequest) GetProject() string {
@@ -661,7 +848,7 @@ type RunPlaybookResult struct {
 func (x *RunPlaybookResult) Reset() {
 	*x = RunPlaybookResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[10]
+		mi := &file_kobe_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -674,7 +861,7 @@ func (x *RunPlaybookResult) String() string {
 func (*RunPlaybookResult) ProtoMessage() {}
 
 func (x *RunPlaybookResult) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[10]
+	mi := &file_kobe_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -687,7 +874,7 @@ func (x *RunPlaybookResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunPlaybookResult.ProtoReflect.Descriptor instead.
 func (*RunPlaybookResult) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{10}
+	return file_kobe_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *RunPlaybookResult) GetResult() *Result {
@@ -711,7 +898,7 @@ type RunAdhocRequest struct {
 func (x *RunAdhocRequest) Reset() {
 	*x = RunAdhocRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[11]
+		mi := &file_kobe_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -724,7 +911,7 @@ func (x *RunAdhocRequest) String() string {
 func (*RunAdhocRequest) ProtoMessage() {}
 
 func (x *RunAdhocRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[11]
+	mi := &file_kobe_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -737,7 +924,7 @@ func (x *RunAdhocRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunAdhocRequest.ProtoReflect.Descriptor instead.
 func (*RunAdhocRequest) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{11}
+	return file_kobe_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *RunAdhocRequest) GetInventory() *Inventory {
@@ -779,7 +966,7 @@ type RunAdhocResult struct {
 func (x *RunAdhocResult) Reset() {
 	*x = RunAdhocResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[12]
+		mi := &file_kobe_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -792,7 +979,7 @@ func (x *RunAdhocResult) String() string {
 func (*RunAdhocResult) ProtoMessage() {}
 
 func (x *RunAdhocResult) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[12]
+	mi := &file_kobe_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -805,7 +992,7 @@ func (x *RunAdhocResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunAdhocResult.ProtoReflect.Descriptor instead.
 func (*RunAdhocResult) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{12}
+	return file_kobe_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *RunAdhocResult) GetResult() *Result {
@@ -833,7 +1020,7 @@ type Result struct {
 func (x *Result) Reset() {
 	*x = Result{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[13]
+		mi := &file_kobe_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -846,7 +1033,7 @@ func (x *Result) String() string {
 func (*Result) ProtoMessage() {}
 
 func (x *Result) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[13]
+	mi := &file_kobe_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -859,7 +1046,7 @@ func (x *Result) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Result.ProtoReflect.Descriptor instead.
 func (*Result) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{13}
+	return file_kobe_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *Result) GetId() string {
@@ -929,7 +1116,7 @@ type WatchStream struct {
 func (x *WatchStream) Reset() {
 	*x = WatchStream{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[14]
+		mi := &file_kobe_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -942,7 +1129,7 @@ func (x *WatchStream) String() string {
 func (*WatchStream) ProtoMessage() {}
 
 func (x *WatchStream) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[14]
+	mi := &file_kobe_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -955,7 +1142,7 @@ func (x *WatchStream) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchStream.ProtoReflect.Descriptor instead.
 func (*WatchStream) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{14}
+	return file_kobe_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *WatchStream) GetStream() []byte {
@@ -976,7 +1163,7 @@ type WatchRequest struct {
 func (x *WatchRequest) Reset() {
 	*x = WatchRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[15]
+		mi := &file_kobe_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -989,7 +1176,7 @@ func (x *WatchRequest) String() string {
 func (*WatchRequest) ProtoMessage() {}
 
 func (x *WatchRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[15]
+	mi := &file_kobe_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1002,7 +1189,7 @@ func (x *WatchRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WatchRequest.ProtoReflect.Descriptor instead.
 func (*WatchRequest) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{15}
+	return file_kobe_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *WatchRequest) GetTaskId() string {
@@ -1023,7 +1210,7 @@ type GetInventoryRequest struct {
 func (x *GetInventoryRequest) Reset() {
 	*x = GetInventoryRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[16]
+		mi := &file_kobe_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1036,7 +1223,7 @@ func (x *GetInventoryRequest) String() string {
 func (*GetInventoryRequest) ProtoMessage() {}
 
 func (x *GetInventoryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[16]
+	mi := &file_kobe_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1049,7 +1236,7 @@ func (x *GetInventoryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInventoryRequest.ProtoReflect.Descriptor instead.
 func (*GetInventoryRequest) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{16}
+	return file_kobe_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetInventoryRequest) GetId() string {
@@ -1070,7 +1257,7 @@ type GetInventoryResponse struct {
 func (x *GetInventoryResponse) Reset() {
 	*x = GetInventoryResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[17]
+		mi := &file_kobe_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1083,7 +1270,7 @@ func (x *GetInventoryResponse) String() string {
 func (*GetInventoryResponse) ProtoMessage() {}
 
 func (x *GetInventoryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[17]
+	mi := &file_kobe_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1096,7 +1283,7 @@ func (x *GetInventoryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetInventoryResponse.ProtoReflect.Descriptor instead.
 func (*GetInventoryResponse) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{17}
+	return file_kobe_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GetInventoryResponse) GetItem() *Inventory {
@@ -1117,7 +1304,7 @@ type GetResultRequest struct {
 func (x *GetResultRequest) Reset() {
 	*x = GetResultRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[18]
+		mi := &file_kobe_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1130,7 +1317,7 @@ func (x *GetResultRequest) String() string {
 func (*GetResultRequest) ProtoMessage() {}
 
 func (x *GetResultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[18]
+	mi := &file_kobe_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1143,7 +1330,7 @@ func (x *GetResultRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResultRequest.ProtoReflect.Descriptor instead.
 func (*GetResultRequest) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{18}
+	return file_kobe_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GetResultRequest) GetTaskId() string {
@@ -1164,7 +1351,7 @@ type GetResultResponse struct {
 func (x *GetResultResponse) Reset() {
 	*x = GetResultResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[19]
+		mi := &file_kobe_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1177,7 +1364,7 @@ func (x *GetResultResponse) String() string {
 func (*GetResultResponse) ProtoMessage() {}
 
 func (x *GetResultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[19]
+	mi := &file_kobe_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1190,7 +1377,7 @@ func (x *GetResultResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetResultResponse.ProtoReflect.Descriptor instead.
 func (*GetResultResponse) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{19}
+	return file_kobe_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GetResultResponse) GetItem() *Result {
@@ -1209,7 +1396,7 @@ type ListResultRequest struct {
 func (x *ListResultRequest) Reset() {
 	*x = ListResultRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[20]
+		mi := &file_kobe_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1222,7 +1409,7 @@ func (x *ListResultRequest) String() string {
 func (*ListResultRequest) ProtoMessage() {}
 
 func (x *ListResultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[20]
+	mi := &file_kobe_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1235,7 +1422,7 @@ func (x *ListResultRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResultRequest.ProtoReflect.Descriptor instead.
 func (*ListResultRequest) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{20}
+	return file_kobe_proto_rawDescGZIP(), []int{24}
 }
 
 type ListResultResponse struct {
@@ -1249,7 +1436,7 @@ type ListResultResponse struct {
 func (x *ListResultResponse) Reset() {
 	*x = ListResultResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_kobe_proto_msgTypes[21]
+		mi := &file_kobe_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1262,7 +1449,7 @@ func (x *ListResultResponse) String() string {
 func (*ListResultResponse) ProtoMessage() {}
 
 func (x *ListResultResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_kobe_proto_msgTypes[21]
+	mi := &file_kobe_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1275,7 +1462,7 @@ func (x *ListResultResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResultResponse.ProtoReflect.Descriptor instead.
 func (*ListResultResponse) Descriptor() ([]byte, []int) {
-	return file_kobe_proto_rawDescGZIP(), []int{21}
+	return file_kobe_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ListResultResponse) GetItems() []*Result {
@@ -1289,7 +1476,18 @@ var File_kobe_proto protoreflect.FileDescriptor
 
 var file_kobe_proto_rawDesc = []byte{
 	0x0a, 0x0a, 0x6b, 0x6f, 0x62, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x03, 0x61, 0x70,
-	0x69, 0x22, 0x3b, 0x0a, 0x07, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x12, 0x0a, 0x04,
+	0x69, 0x22, 0x49, 0x0a, 0x17, 0x53, 0x65, 0x74, 0x41, 0x6e, 0x73, 0x69, 0x62, 0x6c, 0x65, 0x52,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06,
+	0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x74, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x74, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x22, 0x1a, 0x0a, 0x18,
+	0x53, 0x65, 0x74, 0x41, 0x6e, 0x73, 0x69, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x22, 0x0a, 0x0c, 0x48, 0x65, 0x6c, 0x6c,
+	0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x23, 0x0a, 0x0d,
+	0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x22, 0x3b, 0x0a, 0x07, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x12, 0x0a, 0x04,
 	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
 	0x12, 0x1c, 0x0a, 0x09, 0x70, 0x6c, 0x61, 0x79, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x18, 0x02, 0x20,
 	0x03, 0x28, 0x09, 0x52, 0x09, 0x70, 0x6c, 0x61, 0x79, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x22, 0xa4,
@@ -1413,7 +1611,7 @@ var file_kobe_proto_rawDesc = []byte{
 	0x73, 0x74, 0x22, 0x37, 0x0a, 0x12, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
 	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x21, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d,
 	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0b, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x52, 0x65,
-	0x73, 0x75, 0x6c, 0x74, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x32, 0x90, 0x04, 0x0a, 0x07,
+	0x73, 0x75, 0x6c, 0x74, 0x52, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x32, 0x99, 0x05, 0x0a, 0x07,
 	0x4b, 0x6f, 0x62, 0x65, 0x41, 0x70, 0x69, 0x12, 0x48, 0x0a, 0x0d, 0x43, 0x72, 0x65, 0x61, 0x74,
 	0x65, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x19, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x43,
 	0x72, 0x65, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x75,
@@ -1446,8 +1644,17 @@ var file_kobe_proto_rawDesc = []byte{
 	0x0a, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x16, 0x2e, 0x61, 0x70,
 	0x69, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x65, 0x71, 0x75,
 	0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65,
-	0x73, 0x75, 0x6c, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x07,
-	0x5a, 0x05, 0x2e, 0x3b, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x73, 0x75, 0x6c, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x34,
+	0x0a, 0x09, 0x54, 0x65, 0x73, 0x74, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x12, 0x11, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12,
+	0x2e, 0x61, 0x70, 0x69, 0x2e, 0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x00, 0x12, 0x51, 0x0a, 0x10, 0x53, 0x65, 0x74, 0x41, 0x6e, 0x73, 0x69, 0x62,
+	0x6c, 0x65, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x1c, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x53,
+	0x65, 0x74, 0x41, 0x6e, 0x73, 0x69, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1d, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x53, 0x65, 0x74,
+	0x41, 0x6e, 0x73, 0x69, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x07, 0x5a, 0x05, 0x2e, 0x3b, 0x61, 0x70, 0x69,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1462,68 +1669,76 @@ func file_kobe_proto_rawDescGZIP() []byte {
 	return file_kobe_proto_rawDescData
 }
 
-var file_kobe_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_kobe_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_kobe_proto_goTypes = []interface{}{
-	(*Project)(nil),               // 0: api.Project
-	(*Host)(nil),                  // 1: api.Host
-	(*ProxyConfig)(nil),           // 2: api.ProxyConfig
-	(*Group)(nil),                 // 3: api.Group
-	(*Inventory)(nil),             // 4: api.Inventory
-	(*CreateProjectRequest)(nil),  // 5: api.CreateProjectRequest
-	(*CreateProjectResponse)(nil), // 6: api.CreateProjectResponse
-	(*ListProjectRequest)(nil),    // 7: api.ListProjectRequest
-	(*ListProjectResponse)(nil),   // 8: api.ListProjectResponse
-	(*RunPlaybookRequest)(nil),    // 9: api.RunPlaybookRequest
-	(*RunPlaybookResult)(nil),     // 10: api.RunPlaybookResult
-	(*RunAdhocRequest)(nil),       // 11: api.RunAdhocRequest
-	(*RunAdhocResult)(nil),        // 12: api.RunAdhocResult
-	(*Result)(nil),                // 13: api.Result
-	(*WatchStream)(nil),           // 14: api.WatchStream
-	(*WatchRequest)(nil),          // 15: api.WatchRequest
-	(*GetInventoryRequest)(nil),   // 16: api.GetInventoryRequest
-	(*GetInventoryResponse)(nil),  // 17: api.GetInventoryResponse
-	(*GetResultRequest)(nil),      // 18: api.GetResultRequest
-	(*GetResultResponse)(nil),     // 19: api.GetResultResponse
-	(*ListResultRequest)(nil),     // 20: api.ListResultRequest
-	(*ListResultResponse)(nil),    // 21: api.ListResultResponse
-	nil,                           // 22: api.Host.VarsEntry
-	nil,                           // 23: api.Group.VarsEntry
-	nil,                           // 24: api.Inventory.VarsEntry
+	(*SetAnsibleResultRequest)(nil),  // 0: api.SetAnsibleResultRequest
+	(*SetAnsibleResultResponse)(nil), // 1: api.SetAnsibleResultResponse
+	(*HelloRequest)(nil),             // 2: api.HelloRequest
+	(*HelloResponse)(nil),            // 3: api.HelloResponse
+	(*Project)(nil),                  // 4: api.Project
+	(*Host)(nil),                     // 5: api.Host
+	(*ProxyConfig)(nil),              // 6: api.ProxyConfig
+	(*Group)(nil),                    // 7: api.Group
+	(*Inventory)(nil),                // 8: api.Inventory
+	(*CreateProjectRequest)(nil),     // 9: api.CreateProjectRequest
+	(*CreateProjectResponse)(nil),    // 10: api.CreateProjectResponse
+	(*ListProjectRequest)(nil),       // 11: api.ListProjectRequest
+	(*ListProjectResponse)(nil),      // 12: api.ListProjectResponse
+	(*RunPlaybookRequest)(nil),       // 13: api.RunPlaybookRequest
+	(*RunPlaybookResult)(nil),        // 14: api.RunPlaybookResult
+	(*RunAdhocRequest)(nil),          // 15: api.RunAdhocRequest
+	(*RunAdhocResult)(nil),           // 16: api.RunAdhocResult
+	(*Result)(nil),                   // 17: api.Result
+	(*WatchStream)(nil),              // 18: api.WatchStream
+	(*WatchRequest)(nil),             // 19: api.WatchRequest
+	(*GetInventoryRequest)(nil),      // 20: api.GetInventoryRequest
+	(*GetInventoryResponse)(nil),     // 21: api.GetInventoryResponse
+	(*GetResultRequest)(nil),         // 22: api.GetResultRequest
+	(*GetResultResponse)(nil),        // 23: api.GetResultResponse
+	(*ListResultRequest)(nil),        // 24: api.ListResultRequest
+	(*ListResultResponse)(nil),       // 25: api.ListResultResponse
+	nil,                              // 26: api.Host.VarsEntry
+	nil,                              // 27: api.Group.VarsEntry
+	nil,                              // 28: api.Inventory.VarsEntry
 }
 var file_kobe_proto_depIdxs = []int32{
-	2,  // 0: api.Host.proxyConfig:type_name -> api.ProxyConfig
-	22, // 1: api.Host.vars:type_name -> api.Host.VarsEntry
-	23, // 2: api.Group.vars:type_name -> api.Group.VarsEntry
-	1,  // 3: api.Inventory.hosts:type_name -> api.Host
-	3,  // 4: api.Inventory.groups:type_name -> api.Group
-	24, // 5: api.Inventory.vars:type_name -> api.Inventory.VarsEntry
-	0,  // 6: api.CreateProjectResponse.item:type_name -> api.Project
-	0,  // 7: api.ListProjectResponse.items:type_name -> api.Project
-	4,  // 8: api.RunPlaybookRequest.inventory:type_name -> api.Inventory
-	13, // 9: api.RunPlaybookResult.result:type_name -> api.Result
-	4,  // 10: api.RunAdhocRequest.inventory:type_name -> api.Inventory
-	13, // 11: api.RunAdhocResult.result:type_name -> api.Result
-	4,  // 12: api.GetInventoryResponse.item:type_name -> api.Inventory
-	13, // 13: api.GetResultResponse.item:type_name -> api.Result
-	13, // 14: api.ListResultResponse.items:type_name -> api.Result
-	5,  // 15: api.KobeApi.CreateProject:input_type -> api.CreateProjectRequest
-	7,  // 16: api.KobeApi.ListProject:input_type -> api.ListProjectRequest
-	16, // 17: api.KobeApi.GetInventory:input_type -> api.GetInventoryRequest
-	9,  // 18: api.KobeApi.RunPlaybook:input_type -> api.RunPlaybookRequest
-	11, // 19: api.KobeApi.RunAdhoc:input_type -> api.RunAdhocRequest
-	15, // 20: api.KobeApi.WatchResult:input_type -> api.WatchRequest
-	18, // 21: api.KobeApi.GetResult:input_type -> api.GetResultRequest
-	20, // 22: api.KobeApi.ListResult:input_type -> api.ListResultRequest
-	6,  // 23: api.KobeApi.CreateProject:output_type -> api.CreateProjectResponse
-	8,  // 24: api.KobeApi.ListProject:output_type -> api.ListProjectResponse
-	17, // 25: api.KobeApi.GetInventory:output_type -> api.GetInventoryResponse
-	10, // 26: api.KobeApi.RunPlaybook:output_type -> api.RunPlaybookResult
-	12, // 27: api.KobeApi.RunAdhoc:output_type -> api.RunAdhocResult
-	14, // 28: api.KobeApi.WatchResult:output_type -> api.WatchStream
-	19, // 29: api.KobeApi.GetResult:output_type -> api.GetResultResponse
-	21, // 30: api.KobeApi.ListResult:output_type -> api.ListResultResponse
-	23, // [23:31] is the sub-list for method output_type
-	15, // [15:23] is the sub-list for method input_type
+	6,  // 0: api.Host.proxyConfig:type_name -> api.ProxyConfig
+	26, // 1: api.Host.vars:type_name -> api.Host.VarsEntry
+	27, // 2: api.Group.vars:type_name -> api.Group.VarsEntry
+	5,  // 3: api.Inventory.hosts:type_name -> api.Host
+	7,  // 4: api.Inventory.groups:type_name -> api.Group
+	28, // 5: api.Inventory.vars:type_name -> api.Inventory.VarsEntry
+	4,  // 6: api.CreateProjectResponse.item:type_name -> api.Project
+	4,  // 7: api.ListProjectResponse.items:type_name -> api.Project
+	8,  // 8: api.RunPlaybookRequest.inventory:type_name -> api.Inventory
+	17, // 9: api.RunPlaybookResult.result:type_name -> api.Result
+	8,  // 10: api.RunAdhocRequest.inventory:type_name -> api.Inventory
+	17, // 11: api.RunAdhocResult.result:type_name -> api.Result
+	8,  // 12: api.GetInventoryResponse.item:type_name -> api.Inventory
+	17, // 13: api.GetResultResponse.item:type_name -> api.Result
+	17, // 14: api.ListResultResponse.items:type_name -> api.Result
+	9,  // 15: api.KobeApi.CreateProject:input_type -> api.CreateProjectRequest
+	11, // 16: api.KobeApi.ListProject:input_type -> api.ListProjectRequest
+	20, // 17: api.KobeApi.GetInventory:input_type -> api.GetInventoryRequest
+	13, // 18: api.KobeApi.RunPlaybook:input_type -> api.RunPlaybookRequest
+	15, // 19: api.KobeApi.RunAdhoc:input_type -> api.RunAdhocRequest
+	19, // 20: api.KobeApi.WatchResult:input_type -> api.WatchRequest
+	22, // 21: api.KobeApi.GetResult:input_type -> api.GetResultRequest
+	24, // 22: api.KobeApi.ListResult:input_type -> api.ListResultRequest
+	2,  // 23: api.KobeApi.TestHello:input_type -> api.HelloRequest
+	0,  // 24: api.KobeApi.SetAnsibleResult:input_type -> api.SetAnsibleResultRequest
+	10, // 25: api.KobeApi.CreateProject:output_type -> api.CreateProjectResponse
+	12, // 26: api.KobeApi.ListProject:output_type -> api.ListProjectResponse
+	21, // 27: api.KobeApi.GetInventory:output_type -> api.GetInventoryResponse
+	14, // 28: api.KobeApi.RunPlaybook:output_type -> api.RunPlaybookResult
+	16, // 29: api.KobeApi.RunAdhoc:output_type -> api.RunAdhocResult
+	18, // 30: api.KobeApi.WatchResult:output_type -> api.WatchStream
+	23, // 31: api.KobeApi.GetResult:output_type -> api.GetResultResponse
+	25, // 32: api.KobeApi.ListResult:output_type -> api.ListResultResponse
+	3,  // 33: api.KobeApi.TestHello:output_type -> api.HelloResponse
+	1,  // 34: api.KobeApi.SetAnsibleResult:output_type -> api.SetAnsibleResultResponse
+	25, // [25:35] is the sub-list for method output_type
+	15, // [15:25] is the sub-list for method input_type
 	15, // [15:15] is the sub-list for extension type_name
 	15, // [15:15] is the sub-list for extension extendee
 	0,  // [0:15] is the sub-list for field type_name
@@ -1536,7 +1751,7 @@ func file_kobe_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_kobe_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Project); i {
+			switch v := v.(*SetAnsibleResultRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1548,7 +1763,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Host); i {
+			switch v := v.(*SetAnsibleResultResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1560,7 +1775,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProxyConfig); i {
+			switch v := v.(*HelloRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1572,7 +1787,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Group); i {
+			switch v := v.(*HelloResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1584,7 +1799,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Inventory); i {
+			switch v := v.(*Project); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1596,7 +1811,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateProjectRequest); i {
+			switch v := v.(*Host); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1608,7 +1823,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateProjectResponse); i {
+			switch v := v.(*ProxyConfig); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1620,7 +1835,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListProjectRequest); i {
+			switch v := v.(*Group); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1632,7 +1847,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListProjectResponse); i {
+			switch v := v.(*Inventory); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1644,7 +1859,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RunPlaybookRequest); i {
+			switch v := v.(*CreateProjectRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1656,7 +1871,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RunPlaybookResult); i {
+			switch v := v.(*CreateProjectResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1668,7 +1883,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RunAdhocRequest); i {
+			switch v := v.(*ListProjectRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1680,7 +1895,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RunAdhocResult); i {
+			switch v := v.(*ListProjectResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1692,7 +1907,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Result); i {
+			switch v := v.(*RunPlaybookRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1704,7 +1919,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WatchStream); i {
+			switch v := v.(*RunPlaybookResult); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1716,7 +1931,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WatchRequest); i {
+			switch v := v.(*RunAdhocRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1728,7 +1943,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetInventoryRequest); i {
+			switch v := v.(*RunAdhocResult); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1740,7 +1955,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetInventoryResponse); i {
+			switch v := v.(*Result); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1752,7 +1967,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetResultRequest); i {
+			switch v := v.(*WatchStream); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1764,7 +1979,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetResultResponse); i {
+			switch v := v.(*WatchRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1776,7 +1991,7 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListResultRequest); i {
+			switch v := v.(*GetInventoryRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1788,6 +2003,54 @@ func file_kobe_proto_init() {
 			}
 		}
 		file_kobe_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetInventoryResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_kobe_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetResultRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_kobe_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetResultResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_kobe_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListResultRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_kobe_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListResultResponse); i {
 			case 0:
 				return &v.state
@@ -1806,7 +2069,7 @@ func file_kobe_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_kobe_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   25,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -1840,6 +2103,8 @@ type KobeApiClient interface {
 	WatchResult(ctx context.Context, in *WatchRequest, opts ...grpc.CallOption) (KobeApi_WatchResultClient, error)
 	GetResult(ctx context.Context, in *GetResultRequest, opts ...grpc.CallOption) (*GetResultResponse, error)
 	ListResult(ctx context.Context, in *ListResultRequest, opts ...grpc.CallOption) (*ListResultResponse, error)
+	TestHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
+	SetAnsibleResult(ctx context.Context, in *SetAnsibleResultRequest, opts ...grpc.CallOption) (*SetAnsibleResultResponse, error)
 }
 
 type kobeApiClient struct {
@@ -1945,6 +2210,24 @@ func (c *kobeApiClient) ListResult(ctx context.Context, in *ListResultRequest, o
 	return out, nil
 }
 
+func (c *kobeApiClient) TestHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error) {
+	out := new(HelloResponse)
+	err := c.cc.Invoke(ctx, "/api.KobeApi/TestHello", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kobeApiClient) SetAnsibleResult(ctx context.Context, in *SetAnsibleResultRequest, opts ...grpc.CallOption) (*SetAnsibleResultResponse, error) {
+	out := new(SetAnsibleResultResponse)
+	err := c.cc.Invoke(ctx, "/api.KobeApi/SetAnsibleResult", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // KobeApiServer is the server API for KobeApi service.
 type KobeApiServer interface {
 	CreateProject(context.Context, *CreateProjectRequest) (*CreateProjectResponse, error)
@@ -1955,6 +2238,8 @@ type KobeApiServer interface {
 	WatchResult(*WatchRequest, KobeApi_WatchResultServer) error
 	GetResult(context.Context, *GetResultRequest) (*GetResultResponse, error)
 	ListResult(context.Context, *ListResultRequest) (*ListResultResponse, error)
+	TestHello(context.Context, *HelloRequest) (*HelloResponse, error)
+	SetAnsibleResult(context.Context, *SetAnsibleResultRequest) (*SetAnsibleResultResponse, error)
 }
 
 // UnimplementedKobeApiServer can be embedded to have forward compatible implementations.
@@ -1984,6 +2269,12 @@ func (*UnimplementedKobeApiServer) GetResult(context.Context, *GetResultRequest)
 }
 func (*UnimplementedKobeApiServer) ListResult(context.Context, *ListResultRequest) (*ListResultResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListResult not implemented")
+}
+func (*UnimplementedKobeApiServer) TestHello(context.Context, *HelloRequest) (*HelloResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TestHello not implemented")
+}
+func (*UnimplementedKobeApiServer) SetAnsibleResult(context.Context, *SetAnsibleResultRequest) (*SetAnsibleResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetAnsibleResult not implemented")
 }
 
 func RegisterKobeApiServer(s *grpc.Server, srv KobeApiServer) {
@@ -2137,6 +2428,42 @@ func _KobeApi_ListResult_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _KobeApi_TestHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HelloRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KobeApiServer).TestHello(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.KobeApi/TestHello",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KobeApiServer).TestHello(ctx, req.(*HelloRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _KobeApi_SetAnsibleResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetAnsibleResultRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KobeApiServer).SetAnsibleResult(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.KobeApi/SetAnsibleResult",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KobeApiServer).SetAnsibleResult(ctx, req.(*SetAnsibleResultRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _KobeApi_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "api.KobeApi",
 	HandlerType: (*KobeApiServer)(nil),
@@ -2168,6 +2495,14 @@ var _KobeApi_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListResult",
 			Handler:    _KobeApi_ListResult_Handler,
+		},
+		{
+			MethodName: "TestHello",
+			Handler:    _KobeApi_TestHello_Handler,
+		},
+		{
+			MethodName: "SetAnsibleResult",
+			Handler:    _KobeApi_SetAnsibleResult_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

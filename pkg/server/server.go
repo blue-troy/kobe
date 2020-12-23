@@ -5,13 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/KubeOperator/kobe/api"
-	"github.com/KubeOperator/kobe/pkg/constant"
 	"github.com/patrickmn/go-cache"
 	uuid "github.com/satori/go.uuid"
-	"io/ioutil"
-	"log"
-	"os"
-	"path"
 	"time"
 )
 
@@ -20,6 +15,7 @@ type Kobe struct {
 	inventoryCache *cache.Cache
 	chCache        *cache.Cache
 	pool           *Pool
+	resultCache    *cache.Cache
 }
 
 func NewKobe() *Kobe {
@@ -27,8 +23,19 @@ func NewKobe() *Kobe {
 		taskCache:      cache.New(24*time.Hour, 5*time.Minute),
 		chCache:        cache.New(24*time.Hour, 5*time.Minute),
 		inventoryCache: cache.New(10*time.Minute, 5*time.Minute),
+		resultCache:    cache.New(24*time.Hour, 5*time.Minute),
 		pool:           NewPool(),
 	}
+}
+
+func (k *Kobe) SetAnsibleResult(context context.Context, req *api.SetAnsibleResultRequest) (*api.SetAnsibleResultResponse, error) {
+	k.resultCache.Set(req.TaskId, req.Result, cache.DefaultExpiration)
+	return &api.SetAnsibleResultResponse{}, nil
+}
+
+func (k *Kobe) TestHello(ctx context.Context, req *api.HelloRequest) (*api.HelloResponse, error) {
+	println("rec  message %s", req.Name)
+	return &api.HelloResponse{Name: "world"}, nil
 }
 
 func (k *Kobe) CreateProject(ctx context.Context, req *api.CreateProjectRequest) (*api.CreateProjectResponse, error) {
@@ -172,20 +179,16 @@ func (k *Kobe) GetResult(ctx context.Context, req *api.GetResultRequest) (*api.G
 	if !ok {
 		return nil, errors.New("invalid result type")
 	}
-	if val.Project == "" {
-		val.Project = "adhoc"
-	}
 	if val.Finished {
-		bytes, err := ioutil.ReadFile(path.Join(constant.WorkDir, val.Project, val.Id, "result.json"))
-		if err != nil {
-			return nil, err
+		content, found := k.resultCache.Get(id)
+		if !found {
+			return nil, fmt.Errorf("can not found %s result in cache", id)
 		}
-		val.Content = string(bytes)
-		// 取完数据后删除缓存目录
-		err = os.RemoveAll(path.Join(constant.WorkDir, val.Project, val.Id))
-		if err != nil {
-			log.Println(err)
+		resultContent, ok := content.(string)
+		if !ok {
+			return nil, errors.New("invalid result type")
 		}
+		val.Content = resultContent
 	}
 	return &api.GetResultResponse{Item: val}, nil
 }

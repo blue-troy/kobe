@@ -20,10 +20,23 @@ RUN make build_server_linux GOARCH=$GOARCH
 FROM alpinelinux/ansible:latest
 
 RUN apk add sshpass \
+    && apk add git \
     && pip3 install netaddr \
-    && pip3 install pywinrm
+    && pip3 install pywinrm \
+    && pip3 install grpcio \
+    && pip3 install grpcio-tools
 
 
+WORKDIR /tmp
+RUN git clone https://github.com/KubeOperator/KobeAnsiblePlugin.git
+
+WORKDIR /tmp/KobeAnsiblePlugin
+RUN mkdir -r /var/kobe/lib/ansible
+RUN cp -rf plugins /var/kobe/lib/ansible
+RUN python setup.py install
+
+
+WORKDIR /root
 RUN mkdir /root/.ssh  \
     && touch /root/.ssh/config \
     && echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile /dev/null" > /root/.ssh/config
