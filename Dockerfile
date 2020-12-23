@@ -25,8 +25,8 @@ RUN apk add sshpass \
     && apk add g++ \
     && pip3 install netaddr \
     && pip3 install pywinrm \
-    && pip3 install grpcio-tools
-    && pip3 install grpcio \
+    && pip3 install grpcio-tools \
+    && pip3 install grpcio
 
 
 WORKDIR /tmp
