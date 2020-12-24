@@ -25,10 +25,14 @@ RUN apt install -y sshpass
 
 RUN pip install ansible \
     && pip install netaddr \
-    && pip install pywinrm \
-    && pip install grpcio-tools \
-    && pip install grpcio \
-    && pip install ansible-kobe-plugin==0.0.3
+    && pip install pywinrm
+
+
+COPY plugin /tmp/plugin
+
+WORKDIR /tmp/plugin
+RUN python setup.py install
+
 
 WORKDIR /root
 RUN mkdir /root/.ssh  \
@@ -39,6 +43,8 @@ COPY --from=stage-build /build/kobe/dist/etc /etc/
 COPY --from=stage-build /build/kobe/dist/usr /usr/
 
 RUN echo 'kobe-server' >> /root/entrypoint.sh
+
+RUN rm -fr /tmp/*
 
 VOLUME ["/var/kobe/data"]
 
