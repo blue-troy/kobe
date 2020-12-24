@@ -20,8 +20,9 @@ var (
 	KeyDir                  = path.Join(DataDir, "key")
 	WorkDir                 = path.Join(BaseDir, "work")
 	ProjectDir              = path.Join(DataDir, "project")
+	AnsibleConfDir          = path.Join("/", "etc", "ansible")
 	AnsibleTemplateFilePath = path.Join("/", "etc", "kobe", "ansible.cfg.tmpl")
-	AnsibleConfPath         = path.Join("/", "etc", "ansible", "ansible.cfg")
+	AnsibleConfPath         = path.Join(AnsibleConfDir, "ansible.cfg")
 )
 
 func Init() {

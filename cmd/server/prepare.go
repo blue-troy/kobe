@@ -13,6 +13,7 @@ func prepareStart() error {
 		makeDataDir,
 		makeCacheDir,
 		makeKeyDir,
+		makeConfDir,
 		lookUpAnsibleBinPath,
 		lookUpKobeInventoryBinPath,
 		cleanWorkPath,
@@ -37,6 +38,10 @@ func makeCacheDir() error {
 
 func makeKeyDir() error {
 	return os.MkdirAll(constant.KeyDir, 0755)
+}
+
+func makeConfDir() error {
+	return os.MkdirAll(constant.AnsibleConfDir, 0755)
 }
 
 func lookUpAnsibleBinPath() error {
