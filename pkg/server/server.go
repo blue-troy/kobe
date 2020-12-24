@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/KubeOperator/kobe/api"
 	"github.com/patrickmn/go-cache"
+	"github.com/prometheus/common/log"
 	uuid "github.com/satori/go.uuid"
 	"io"
 	"sync"
@@ -32,6 +33,7 @@ func NewKobe() *Kobe {
 
 func (k *Kobe) SetAnsibleResult(context context.Context, req *api.SetAnsibleResultRequest) (*api.SetAnsibleResultResponse, error) {
 	k.resultCache.Set(req.TaskId, req.Result, cache.DefaultExpiration)
+	log.Infof("receive a result %s", req.TaskId)
 	return &api.SetAnsibleResultResponse{}, nil
 }
 
@@ -133,6 +135,7 @@ func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.Run
 		wg := sync.WaitGroup{}
 		wg.Add(1)
 		stdout := runner.Run(&wg, &result)
+		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 		k.stdoutCache.Set(result.Id, stdout, cache.DefaultExpiration)
 		wg.Wait()
 		result.Finished = true
@@ -171,6 +174,7 @@ func (k *Kobe) RunPlaybook(ctx context.Context, req *api.RunPlaybookRequest) (*a
 		wg.Add(1)
 		stdout := runner.Run(&wg, &result)
 		k.stdoutCache.Set(result.Id, stdout, cache.DefaultExpiration)
+		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 		wg.Wait()
 		result.Finished = true
 		result.EndTime = time.Now().Format("2006-01-02 15:04:05")
