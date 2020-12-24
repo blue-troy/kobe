@@ -29,11 +29,6 @@ RUN pip install ansible \
     && pip install grpcio-tools \
     && pip install grpcio
 
-
-COPY plugin /tmp/plugin
-WORKDIR /tmp/plugin
-RUN python setup.py install
-
 WORKDIR /root
 RUN mkdir /root/.ssh  \
     && touch /root/.ssh/config \
@@ -41,6 +36,11 @@ RUN mkdir /root/.ssh  \
 
 COPY --from=stage-build /build/kobe/dist/etc /etc/
 COPY --from=stage-build /build/kobe/dist/usr /usr/
+
+COPY  --from=stage-build /build/kobe/plugin /tmp/plugin
+WORKDIR /tmp/plugin
+RUN python setup.py install
+
 
 RUN echo 'kobe-server' >> /root/entrypoint.sh
 
