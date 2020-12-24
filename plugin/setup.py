@@ -11,7 +11,7 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=['plugins/*']),
     license='MIT',
     data_files=[
-        ('/var/kobe/lib/ansible/plugins/callback', ['plugins/callback/result.py']),
+        ('plugins/callback', ['plugins/callback/result.py']),
     ],
     include_package_data=True,
     install_requires=["grpcio", "grpcio-tools", "ansible"]

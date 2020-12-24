@@ -33,9 +33,11 @@ COPY --from=stage-build /build/kobe/dist/etc /etc/
 COPY --from=stage-build /build/kobe/dist/usr /usr/
 
 COPY  --from=stage-build /build/kobe/plugin /tmp/plugin
-WORKDIR /tmp/plugin
-RUN python setup.py install
 
+WORKDIR /tmp/plugin
+RUN python setup.py bdist_wheel
+RUN pip install dist/*
+RUN rm -fr /tmp/plugin
 
 WORKDIR /root
 RUN echo 'kobe-server' >> /root/entrypoint.sh
