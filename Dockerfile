@@ -28,7 +28,7 @@ RUN pip install ansible \
     && pip install pywinrm \
     && pip install grpcio-tools \
     && pip install grpcio \
-    && pip install ansible-kobe-plugin == 0.0.3
+    && pip install ansible-kobe-plugin==0.0.3
 
 WORKDIR /root
 RUN mkdir /root/.ssh  \
