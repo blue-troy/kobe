@@ -35,7 +35,8 @@ RUN mkdir /root/.ssh  \
     && touch /root/.ssh/config \
     && echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile /dev/null" > /root/.ssh/config
 
-COPY --from=stage-build /build/kobe/dist/* /
+COPY --from=stage-build /build/kobe/dist/etc /etc/
+COPY --from=stage-build /build/kobe/dist/usr /usr/
 
 RUN echo 'kobe-server' >> /root/entrypoint.sh
 
