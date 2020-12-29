@@ -54,7 +54,7 @@ func (c KobeClient) ListProject() ([]*api.Project, error) {
 	return resp.Items, nil
 }
 
-func (c KobeClient) RunPlaybook(project, playbook string, inventory *api.Inventory) (*api.Result, error) {
+func (c KobeClient) RunPlaybook(project, playbook, tag string, inventory *api.Inventory) (*api.Result, error) {
 	conn, err := c.createConnection()
 	if err != nil {
 		return nil, err
@@ -65,6 +65,7 @@ func (c KobeClient) RunPlaybook(project, playbook string, inventory *api.Invento
 		Project:   project,
 		Playbook:  playbook,
 		Inventory: inventory,
+		Tag:       tag,
 	}
 	req, err := client.RunPlaybook(context.Background(), request)
 	if err != nil {

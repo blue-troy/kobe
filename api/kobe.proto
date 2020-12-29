@@ -90,6 +90,7 @@ message RunPlaybookRequest {
   string project = 1;
   string playbook = 2;
   Inventory inventory = 3;
+  string tag = 4;
 }
 
 message RunPlaybookResult {

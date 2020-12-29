@@ -11,7 +11,7 @@ type RunnerManager struct {
 	inventoryCache *cache.Cache
 }
 
-func (rm *RunnerManager) CreatePlaybookRunner(projectName, playbookName string) (*ansible.PlaybookRunner, error) {
+func (rm *RunnerManager) CreatePlaybookRunner(projectName, playbookName, tag string) (*ansible.PlaybookRunner, error) {
 	err := preRunPlaybook(projectName, playbookName)
 	if err != nil {
 		return nil, err
@@ -24,10 +24,11 @@ func (rm *RunnerManager) CreatePlaybookRunner(projectName, playbookName string) 
 	return &ansible.PlaybookRunner{
 		Project:  *p,
 		Playbook: playbookName,
+		Tag:      tag,
 	}, nil
 }
 
-func (rm *RunnerManager) CreateAdhocRunner( pattern, module, param string) (*ansible.AdhocRunner, error) {
+func (rm *RunnerManager) CreateAdhocRunner(pattern, module, param string) (*ansible.AdhocRunner, error) {
 
 	return &ansible.AdhocRunner{
 		Module:  module,
@@ -35,8 +36,6 @@ func (rm *RunnerManager) CreateAdhocRunner( pattern, module, param string) (*ans
 		Pattern: pattern,
 	}, nil
 }
-
-
 
 func preRunPlaybook(projectName, playbookName string) error {
 	pm := ProjectManager{}

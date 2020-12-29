@@ -18,6 +18,7 @@ import (
 type PlaybookRunner struct {
 	Project  api.Project
 	Playbook string
+	Tag      string
 }
 
 type AdhocRunner struct {
@@ -75,6 +76,9 @@ func (p *PlaybookRunner) Run(wg *sync.WaitGroup, result *api.Result) io.ReadClos
 	if exists {
 		varPath = "@" + varPath
 		cmd.Args = append(cmd.Args, "-e", varPath)
+	}
+	if p.Tag != "" {
+		cmd.Args = append(cmd.Args, "-t", p.Tag)
 	}
 	cmdEnv := make([]string, 0)
 	cmdEnv = append(cmdEnv, fmt.Sprintf("%s=%s", constant.TaskEnvKey, result.Id))
