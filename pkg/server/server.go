@@ -123,6 +123,7 @@ func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.Run
 		Message:   "",
 		Success:   false,
 		Finished:  false,
+		Running:   false,
 		Content:   "",
 	}
 	k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
@@ -131,15 +132,18 @@ func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.Run
 	if err != nil {
 		return nil, err
 	}
+	k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 	task := func() {
 		wg := sync.WaitGroup{}
 		wg.Add(1)
 		stdout := runner.Run(&wg, &result)
+		result.Running = true
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 		k.stdoutCache.Set(result.Id, stdout, cache.DefaultExpiration)
 		wg.Wait()
 		result.Finished = true
 		result.EndTime = time.Now().Format("2006-01-02 15:04:05")
+		result.Running = false
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 	}
 	k.pool.Commit(task)
@@ -162,25 +166,29 @@ func (k *Kobe) RunPlaybook(ctx context.Context, req *api.RunPlaybookRequest) (*a
 		Finished:  false,
 		Content:   "",
 		Project:   req.Project,
+		Running:   false,
 	}
 	k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 	k.inventoryCache.Set(result.Id, req.Inventory, cache.DefaultExpiration)
-	runner, err := rm.CreatePlaybookRunner(req.Project, req.Playbook)
+	runner, err := rm.CreatePlaybookRunner(req.Project, req.Tag, req.Playbook)
 	if err != nil {
 		return nil, err
 	}
-	b := func() {
+	k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
+	task := func() {
 		wg := sync.WaitGroup{}
 		wg.Add(1)
 		stdout := runner.Run(&wg, &result)
-		k.stdoutCache.Set(result.Id, stdout, cache.DefaultExpiration)
+		result.Running = true
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
+		k.stdoutCache.Set(result.Id, stdout, cache.DefaultExpiration)
 		wg.Wait()
 		result.Finished = true
 		result.EndTime = time.Now().Format("2006-01-02 15:04:05")
+		result.Running = false
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 	}
-	k.pool.Commit(b)
+	k.pool.Commit(task)
 	return &api.RunPlaybookResult{
 		Result: &result,
 	}, nil

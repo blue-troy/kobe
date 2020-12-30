@@ -117,6 +117,7 @@ message Result {
   bool finished = 6;
   string content = 7;
   string project = 8;
+  bool running = 9;
 }
 
 message WatchStream {
