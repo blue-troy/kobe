@@ -115,7 +115,7 @@ class CallbackModule(CallbackBase):
 
         with open("/etc/kobe/app.yml") as file:
             cont = file.read()
-            x = yaml.load(cont)
+            x = yaml.safe_load(cont)
             host = x["server"]["host"]
             port = x["server"]["port"]
             channel = grpc.insecure_channel('{}:{}'.format(host, port))
