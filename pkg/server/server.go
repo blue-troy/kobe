@@ -81,17 +81,6 @@ func (k *Kobe) WatchResult(req *api.WatchRequest, server api.KobeApi_WatchResult
 	if !found {
 		return errors.New(fmt.Sprintf("can not find task: %s", req.TaskId))
 	}
-	t, found := k.taskCache.Get(req.TaskId)
-	if !found {
-		return errors.New(fmt.Sprintf("can not find task: %s", req.TaskId))
-	}
-	tv, ok := t.(*api.Result)
-	if !ok {
-		return errors.New(fmt.Sprintf("invalid cache"))
-	}
-	if tv.Finished {
-		return errors.New(fmt.Sprintf("task: %s already finished", req.TaskId))
-	}
 	val, ok := stdout.(io.ReadCloser)
 	if !ok {
 		return errors.New(fmt.Sprintf("invalid cache"))
@@ -143,7 +132,6 @@ func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.Run
 		wg.Wait()
 		result.Finished = true
 		result.EndTime = time.Now().Format("2006-01-02 15:04:05")
-		result.Running = false
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 	}
 	k.pool.Commit(task)
@@ -170,7 +158,7 @@ func (k *Kobe) RunPlaybook(ctx context.Context, req *api.RunPlaybookRequest) (*a
 	}
 	k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 	k.inventoryCache.Set(result.Id, req.Inventory, cache.DefaultExpiration)
-	runner, err := rm.CreatePlaybookRunner(req.Project, req.Tag, req.Playbook)
+	runner, err := rm.CreatePlaybookRunner(req.Project, req.Playbook, req.Tag)
 	if err != nil {
 		return nil, err
 	}
@@ -185,7 +173,6 @@ func (k *Kobe) RunPlaybook(ctx context.Context, req *api.RunPlaybookRequest) (*a
 		wg.Wait()
 		result.Finished = true
 		result.EndTime = time.Now().Format("2006-01-02 15:04:05")
-		result.Running = false
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 	}
 	k.pool.Commit(task)
