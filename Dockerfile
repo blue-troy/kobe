@@ -8,10 +8,10 @@ ENV GOOS=linux
 ENV GOARCH=$GOARCH
 ENV CGO_ENABLED=0
 
-
-RUN  apk update \
+RUN apk update \
   && apk add git \
   && apk add make
+
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
@@ -19,9 +19,8 @@ RUN make build_server_linux GOARCH=$GOARCH
 
 FROM python:3.8.7-slim
 
-
-RUN apt update
-RUN apt install -y sshpass
+RUN apt update \
+    && apt install -y sshpass rsync
 
 RUN pip install ansible \
     && pip install netaddr \
