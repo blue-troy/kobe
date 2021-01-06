@@ -20,7 +20,7 @@ RUN make build_server_linux GOARCH=$GOARCH
 FROM python:3.8.7-slim
 
 RUN apt update \
-    && apt install -y sshpass rsync
+    && apt install -y sshpass rsync build-essential
 
 RUN pip install ansible \
     && pip install netaddr \
