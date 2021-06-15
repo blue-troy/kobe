@@ -28,7 +28,11 @@ RUN apk add sshpass \
     && pip3 install netaddr \
     && pip3 install pywinrm
 
-RUN rm -rf /usr/lib/libzstd.so.1.4.5
+RUN rm -rf /usr/lib/libzstd* /usr/lib/libncursesw* /usr/lib/libexpat*
+
+RUN wget https://kubeoperator.oss-cn-beijing.aliyuncs.com/busybox/1.33.1/busybox.tar.gz \
+    && tar zxvf busybox.tar.gz -C /bin \
+    && rm -rf busybox.tar.gz
 
 RUN mkdir /root/.ssh  \
     && touch /root/.ssh/config \
