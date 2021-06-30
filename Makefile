@@ -2,6 +2,7 @@ GOCMD=go
 GOBUILD=$(GOCMD) build
 BASEPATH := $(shell pwd)
 BUILDDIR=$(BASEPATH)/dist
+BUILDMODE= pie
 
 KOBE_SRC=$(BASEPATH)/cmd
 KOBE_SERVER_NAME=kobe-server
@@ -14,13 +15,13 @@ BASE_DIR=var/kobe
 
 
 build_server_linux:
-	GOOS=linux  GOARCH=$(GOARCH) $(GOBUILD) -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME) $(KOBE_SRC)/server/*.go
-	GOOS=linux  GOARCH=$(GOARCH) $(GOBUILD) -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME) $(KOBE_SRC)/inventory/*.go
+	GOOS=linux  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)  -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME) $(KOBE_SRC)/server/*.go
+	GOOS=linux  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)  -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME) $(KOBE_SRC)/inventory/*.go
 	mkdir -p $(BUILDDIR)/$(CONFIG_DIR) && cp -r  $(BASEPATH)/conf/* $(BUILDDIR)/$(CONFIG_DIR)
 	mkdir -p $(BUILDDIR)/$(BASE_DIR)/plugins/callback && cp  $(BASEPATH)/plugin/* $(BUILDDIR)/$(BASE_DIR)//plugins/callback
 build_server_darwin:
-	GOOS=darwin  GOARCH=$(GOARCH) $(GOBUILD) -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME) $(KOBE_SRC)/server/*.go
-	GOOS=darwin  GOARCH=$(GOARCH) $(GOBUILD) -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME) $(KOBE_SRC)/inventory/*.go
+	GOOS=darwin  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)   -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME) $(KOBE_SRC)/server/*.go
+	GOOS=darwin  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)   -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME) $(KOBE_SRC)/inventory/*.go
 	mkdir -p $(BUILDDIR)/$(CONFIG_DIR) && cp -r  $(BASEPATH)/conf/* $(BUILDDIR)/$(CONFIG_DIR)
 	mkdir -p $(BUILDDIR)/$(BASE_DIR)/plugins/callback && cp  $(BASEPATH)/plugin/* $(BUILDDIR)/$(BASE_DIR)//plugins/callback
 
