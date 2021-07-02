@@ -3,6 +3,11 @@ GOBUILD=$(GOCMD) build
 BASEPATH := $(shell pwd)
 BUILDDIR=$(BASEPATH)/dist
 BUILDMODE= pie
+CGO_CFLAGS="-fstack-protector-all -ftrapv -D_FORTIFY_SOURCE=2 -O2"
+CGO_CPPFLAGS="-fstack-protector-all -ftrapv -D_FORTIFY_SOURCE=2 -O2"
+LDFLAGS='-extldflags "-Wl,-z,now"'
+CGO_ENABLED=1
+
 
 KOBE_SRC=$(BASEPATH)/cmd
 KOBE_SERVER_NAME=kobe-server
@@ -14,14 +19,19 @@ CONFIG_DIR=etc/kobe
 BASE_DIR=var/kobe
 
 
+
 build_server_linux:
-	GOOS=linux  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)  -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME) $(KOBE_SRC)/server/*.go
-	GOOS=linux  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)  -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME) $(KOBE_SRC)/inventory/*.go
+	GOOS=linux  CGO_ENABLED=$(CGO_ENABLED)  CGO_CFLAGS=$(CGO_CFLAGS) CGO_CPPFLAGS=$(CGO_CPPFLAGS)  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)  -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME) $(KOBE_SRC)/server/*.go
+	GOOS=linux  CGO_ENABLED=$(CGO_ENABLED)  CGO_CFLAGS=$(CGO_CFLAGS) CGO_CPPFLAGS=$(CGO_CPPFLAGS)  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)  -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME) $(KOBE_SRC)/inventory/*.go
+	strip  $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME)
+	strip  $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME)
 	mkdir -p $(BUILDDIR)/$(CONFIG_DIR) && cp -r  $(BASEPATH)/conf/* $(BUILDDIR)/$(CONFIG_DIR)
 	mkdir -p $(BUILDDIR)/$(BASE_DIR)/plugins/callback && cp  $(BASEPATH)/plugin/* $(BUILDDIR)/$(BASE_DIR)//plugins/callback
 build_server_darwin:
-	GOOS=darwin  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)   -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME) $(KOBE_SRC)/server/*.go
-	GOOS=darwin  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)   -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME) $(KOBE_SRC)/inventory/*.go
+	GOOS=darwin CGO_ENABLED=$(CGO_ENABLED)  CGO_CFLAGS=$(CGO_CFLAGS) CGO_CPPFLAGS=$(CGO_CPPFLAGS)   GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)   -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME) $(KOBE_SRC)/server/*.go
+	GOOS=darwin CGO_ENABLED=$(CGO_ENABLED)  CGO_CFLAGS=$(CGO_CFLAGS) CGO_CPPFLAGS=$(CGO_CPPFLAGS)   GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(BUILDMODE)   -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME) $(KOBE_SRC)/inventory/*.go
+	strip  $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME)
+	strip  $(BUILDDIR)/$(BIN_DIR)/$(KOBE_INVENTORY_NAME)
 	mkdir -p $(BUILDDIR)/$(CONFIG_DIR) && cp -r  $(BASEPATH)/conf/* $(BUILDDIR)/$(CONFIG_DIR)
 	mkdir -p $(BUILDDIR)/$(BASE_DIR)/plugins/callback && cp  $(BASEPATH)/plugin/* $(BUILDDIR)/$(BASE_DIR)//plugins/callback
 
