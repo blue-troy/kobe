@@ -1,4 +1,4 @@
-FROM golang:1.14-alpine as stage-build
+FROM golang:1.14 as stage-build
 LABEL stage=stage-build
 WORKDIR /build/kobe
 ARG GOARCH
@@ -6,11 +6,9 @@ ARG GOARCH
 ENV GO111MODULE=on
 ENV GOOS=linux
 ENV GOARCH=$GOARCH
-ENV CGO_ENABLED=0
+ENV CGO_ENABLED=1
 
-RUN  apk update \
-  && apk add git \
-  && apk add make
+RUN apt-get update
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
