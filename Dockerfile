@@ -24,14 +24,14 @@ RUN apk add sshpass \
     && apk add py3-pip \
     && apk add rsync \
     && apk add openssl \
+    && python3 -m pip install --upgrade pip \
     && pip3 install netaddr \
-    && pip3 install pywinrm
+    && pip3 install pywinrm \
+    && pip3 install --upgrade urllib3 \
+    && pip3 install --upgrade cryptography \
+    && pip3 install --upgrade PyYAML
 
 RUN rm -rf /usr/lib/libzstd* /usr/lib/libncursesw* /usr/lib/libexpat*
-
-RUN wget https://kubeoperator.oss-cn-beijing.aliyuncs.com/busybox/1.33.1/$GOARCH/busybox.tar.gz \
-    && tar zxvf busybox.tar.gz -C /bin \
-    && rm -rf busybox.tar.gz
 
 RUN mkdir /root/.ssh  \
     && touch /root/.ssh/config \
