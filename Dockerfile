@@ -14,7 +14,7 @@ RUN go mod download
 COPY . .
 RUN make build_server_linux GOARCH=$GOARCH
 
-FROM alpine:3.14.0
+FROM frolvlad/alpine-glibc:alpine-3.14_glibc-2.33
 ARG GOARCH
 
 RUN echo > /etc/apk/repositories \
