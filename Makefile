@@ -40,7 +40,7 @@ clean:
 
 docker:
 	@echo "build docker images"
-	docker build -t kubeoperator/kobe:master --build-arg GOARCH=$(GOARCH) .
+	docker build -t kubeoperator/kobe:master --build-arg GOARCH=$(GOARCH) ./Dockefile.$(GOARCH)
 
 generate_grpc:
 	protoc --go_out=plugins=grpc:./api ./api/kobe.proto

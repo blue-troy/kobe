@@ -14,20 +14,22 @@ RUN go mod download
 COPY . .
 RUN make build_server_linux GOARCH=$GOARCH
 
-FROM alpine:3.14.0
+FROM kubeoperator/euleros:2.0
 ARG GOARCH
 
-RUN echo > /etc/apk/repositories && echo -e "https://dl-cdn.alpinelinux.org/alpine/latest-stable/main\nhttps://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories && apk update && apk upgrade
 
-RUN apk add sshpass \
-    && apk add ansible \
-    && apk add py3-pip \
-    && apk add rsync \
-    && apk add openssl \
-    && pip3 install netaddr \
-    && pip3 install pywinrm
+RUN echo > /etc/yum.repos.d/Euler-Base.repo && echo -e "[base]\nname=EulerOS-2.0SP8 base\nbaseurl=http://repo.huaweicloud.com/euler/2.8/os/aarch64/\nenabled=1\ngpgcheck=1\ngpgkey=http://repo.huaweicloud.com/euler/2.8/os/RPM-GPG-KEY-EulerOS" >> /etc/yum.repos.d/Euler-Base.repo
 
-RUN rm -rf /usr/lib/libzstd* /usr/lib/libncursesw* /usr/lib/libexpat*
+RUN curl -sSLo /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+
+
+RUN yum install -y  rsync openssl  python3-pip sshpass libffi-devel python3-devel openssl-devel git wget
+
+RUN pip3 install -U pip -i https://mirrors.aliyun.com/pypi/simple/
+
+RUN pip3 install --no-cache-dir ansible==2.10.4 netaddr pywinrm -i https://mirrors.aliyun.com/pypi/simple/
+
+
 
 RUN wget https://kubeoperator.oss-cn-beijing.aliyuncs.com/busybox/1.33.1/$GOARCH/busybox.tar.gz \
     && tar zxvf busybox.tar.gz -C /bin \
@@ -36,6 +38,9 @@ RUN wget https://kubeoperator.oss-cn-beijing.aliyuncs.com/busybox/1.33.1/$GOARCH
 RUN mkdir /root/.ssh  \
     && touch /root/.ssh/config \
     && echo -e "Host *\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile /dev/null" > /root/.ssh/config
+
+RUN rm -rf /usr/lib/libzstd* /usr/lib/libncursesw* /usr/lib/libexpat*
+RUN yum remove -y libffi-devel python3-devel openssl-devel wget
 
 COPY --from=stage-build /build/kobe/dist/etc /etc/
 COPY --from=stage-build /build/kobe/dist/usr /usr/
