@@ -8,7 +8,6 @@ CGO_CPPFLAGS="-fstack-protector-all -ftrapv -D_FORTIFY_SOURCE=2 -O2"
 LDFLAGS='-extldflags "-Wl,-z,now"'
 CGO_ENABLED=1
 
-
 KOBE_SRC=$(BASEPATH)/cmd
 KOBE_SERVER_NAME=kobe-server
 KOBE_INVENTORY_NAME=kobe-inventory
@@ -17,8 +16,6 @@ KOBE_CLIENT_NAME=kobe
 BIN_DIR=usr/local/bin
 CONFIG_DIR=etc/kobe
 BASE_DIR=var/kobe
-
-
 
 build_server_linux:
 	GOOS=linux  CGO_ENABLED=$(CGO_ENABLED)  CGO_CFLAGS=$(CGO_CFLAGS) CGO_CPPFLAGS=$(CGO_CPPFLAGS)  GOARCH=$(GOARCH) $(GOBUILD) --buildmode=$(GOBUILDMODE) -ldflags $(LDFLAGS) -trimpath  -o $(BUILDDIR)/$(BIN_DIR)/$(KOBE_SERVER_NAME) $(KOBE_SRC)/server/*.go
@@ -40,7 +37,7 @@ clean:
 
 docker:
 	@echo "build docker images"
-	docker build -t kubeoperator/kobe:master --build-arg GOARCH=$(GOARCH) ./Dockefile.$(GOARCH)
+	docker build -t kubeoperator/kobe:master --build-arg GOARCH=$(GOARCH) -f ./Dockerfile.$(GOARCH) .
 
 generate_grpc:
 	protoc --go_out=plugins=grpc:./api ./api/kobe.proto
