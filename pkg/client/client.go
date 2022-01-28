@@ -3,9 +3,10 @@ package client
 import (
 	"context"
 	"fmt"
+	"io"
+
 	"github.com/KubeOperator/kobe/api"
 	"google.golang.org/grpc"
-	"io"
 )
 
 func NewKobeClient(host string, port int) *KobeClient {
@@ -54,7 +55,7 @@ func (c KobeClient) ListProject() ([]*api.Project, error) {
 	return resp.Items, nil
 }
 
-func (c KobeClient) RunPlaybook(project, playbook, tag string, inventory *api.Inventory) (*api.Result, error) {
+func (c KobeClient) RunPlaybook(project, playbook, tag string, inventory *api.Inventory) (*api.KobeResult, error) {
 	conn, err := c.createConnection()
 	if err != nil {
 		return nil, err
@@ -74,7 +75,7 @@ func (c KobeClient) RunPlaybook(project, playbook, tag string, inventory *api.In
 	return req.Result, nil
 }
 
-func (c KobeClient) RunAdhoc(pattern, module, param string, inventory *api.Inventory) (*api.Result, error) {
+func (c KobeClient) RunAdhoc(pattern, module, param string, inventory *api.Inventory) (*api.KobeResult, error) {
 	conn, err := c.createConnection()
 	if err != nil {
 		return nil, err
@@ -124,7 +125,7 @@ func (c *KobeClient) WatchRun(taskId string, writer io.Writer) error {
 	return nil
 }
 
-func (c *KobeClient) GetResult(taskId string) (*api.Result, error) {
+func (c *KobeClient) GetResult(taskId string) (*api.KobeResult, error) {
 	conn, err := c.createConnection()
 	if err != nil {
 		return nil, err
@@ -141,7 +142,7 @@ func (c *KobeClient) GetResult(taskId string) (*api.Result, error) {
 	return resp.Item, nil
 }
 
-func (c *KobeClient) ListResult() ([]*api.Result, error) {
+func (c *KobeClient) ListResult() ([]*api.KobeResult, error) {
 	conn, err := c.createConnection()
 	if err != nil {
 		return nil, err

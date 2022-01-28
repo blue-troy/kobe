@@ -28,7 +28,7 @@ type AdhocRunner struct {
 	Pattern string
 }
 
-func (a *AdhocRunner) Run(ch chan []byte, result *api.Result) {
+func (a *AdhocRunner) Run(ch chan []byte, result *api.KobeResult) {
 	ansiblePath, err := exec.LookPath(constant.AnsibleBinPath)
 	if err != nil {
 		result.Success = false
@@ -55,7 +55,7 @@ func (a *AdhocRunner) Run(ch chan []byte, result *api.Result) {
 
 }
 
-func (p *PlaybookRunner) Run(ch chan []byte, result *api.Result) {
+func (p *PlaybookRunner) Run(ch chan []byte, result *api.KobeResult) {
 	ansiblePath, err := exec.LookPath(constant.AnsiblePlaybookBinPath)
 	if err != nil {
 		result.Success = false
@@ -88,7 +88,7 @@ func (p *PlaybookRunner) Run(ch chan []byte, result *api.Result) {
 	runCmd(ch, p.Project.Name, cmd, result)
 }
 
-func runCmd(ch chan []byte, projectName string, cmd *exec.Cmd, result *api.Result) {
+func runCmd(ch chan []byte, projectName string, cmd *exec.Cmd, result *api.KobeResult) {
 	workPath, err := initWorkSpace(projectName)
 	if err != nil {
 		result.Message = err.Error()

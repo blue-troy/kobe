@@ -75,7 +75,7 @@ func (k *Kobe) WatchResult(req *api.WatchRequest, server api.KobeApi_WatchResult
 	if !found {
 		return fmt.Errorf("can not find task: %s", req.TaskId)
 	}
-	tv, ok := t.(*api.Result)
+	tv, ok := t.(*api.KobeResult)
 	if !ok {
 		return fmt.Errorf("invalid cache")
 	}
@@ -100,7 +100,7 @@ func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.Run
 	}
 	ch := make(chan []byte)
 	id := uuid.NewV4().String()
-	result := api.Result{
+	result := api.KobeResult{
 		Id:        id,
 		StartTime: time.Now().Format("2006-01-02 15:04:05"),
 		EndTime:   "",
@@ -134,7 +134,7 @@ func (k *Kobe) RunPlaybook(ctx context.Context, req *api.RunPlaybookRequest) (*a
 	}
 	ch := make(chan []byte)
 	id := uuid.NewV4().String()
-	result := api.Result{
+	result := api.KobeResult{
 		Id:        id,
 		StartTime: time.Now().Format("2006-01-02 15:04:05"),
 		EndTime:   "",
@@ -169,7 +169,7 @@ func (k *Kobe) GetResult(ctx context.Context, req *api.GetResultRequest) (*api.G
 	if !found {
 		return nil, fmt.Errorf("can not find task: %s result", id)
 	}
-	val, ok := result.(*api.Result)
+	val, ok := result.(*api.KobeResult)
 	if !ok {
 		return nil, errors.New("invalid result type")
 	}
@@ -192,11 +192,11 @@ func (k *Kobe) GetResult(ctx context.Context, req *api.GetResultRequest) (*api.G
 }
 
 func (k *Kobe) ListResult(ctx context.Context, req *api.ListResultRequest) (*api.ListResultResponse, error) {
-	var results []*api.Result
+	var results []*api.KobeResult
 	resultMap := k.taskCache.Items()
 	for taskId := range resultMap {
 		item := resultMap[taskId].Object
-		val, ok := item.(*api.Result)
+		val, ok := item.(*api.KobeResult)
 		if !ok {
 			continue
 		}
