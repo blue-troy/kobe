@@ -146,46 +146,8 @@ func runCmd(ch chan []byte, projectName string, cmd *exec.Cmd, result *api.Resul
 
 func initWorkSpace(projectName string) (string, error) {
 	workPath := path.Join(constant.WorkDir, projectName)
-	if err := os.MkdirAll(workPath, 0755); err != nil {
+	if err := os.MkdirAll(workPath, 0750); err != nil {
 		return "", err
 	}
-	//if err := renderConfig(workPath); err != nil {
-	//	return "", err
-	//}
-	//
-	//if err := initPlugin(workPath); err != nil {
-	//	return "", err
-	//}
 	return workPath, nil
 }
-
-//func renderConfig(workPath string) error {
-//	tmpl := constant.AnsibleTemplateFilePath
-//	file, err := os.OpenFile(path.Join(workPath, ansibleCfgFileName), os.O_CREATE|os.O_RDWR, 0755)
-//	if err != nil {
-//		return err
-//	}
-//	defer file.Close()
-//	t, err := template.ParseFiles(tmpl)
-//	if err != nil {
-//		return err
-//	}
-//	data := viper.GetStringMap("ansible")
-//	if err := t.Execute(file, data); err != nil {
-//		return err
-//	}
-//	return nil
-//}
-//
-//func initPlugin(workPath string) error {
-//	projectPluginDir := path.Join(workPath, ansiblePluginDirName)
-//	_, err := os.Stat(projectPluginDir)
-//	if os.IsNotExist(err) {
-//		if err := os.Symlink(constant.AnsiblePluginDir, path.Join(workPath, ansiblePluginDirName))
-//			err != nil {
-//			return err
-//		}
-//		return nil
-//	}
-//	return err
-//}

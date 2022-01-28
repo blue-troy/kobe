@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/KubeOperator/kobe/pkg/constant"
-	"github.com/spf13/viper"
 	"os"
 	"os/exec"
 	"text/template"
+
+	"github.com/KubeOperator/kobe/pkg/constant"
+	"github.com/spf13/viper"
 )
 
 func prepareStart() error {
@@ -28,20 +29,20 @@ func prepareStart() error {
 }
 
 func makeDataDir() error {
-	return os.MkdirAll(constant.ProjectDir, 0755)
+	return os.MkdirAll(constant.ProjectDir, 0750)
 
 }
 
 func makeAnsibleCfgDir() error {
-	return os.MkdirAll(constant.AnsibleConfDir, 0755)
+	return os.MkdirAll(constant.AnsibleConfDir, 0750)
 }
 
 func makeCacheDir() error {
-	return os.MkdirAll(constant.CacheDir, 0755)
+	return os.MkdirAll(constant.CacheDir, 0750)
 }
 
 func makeKeyDir() error {
-	return os.MkdirAll(constant.KeyDir, 0755)
+	return os.MkdirAll(constant.KeyDir, 0750)
 }
 
 func lookUpAnsibleBinPath() error {
@@ -67,7 +68,7 @@ func cleanWorkPath() error {
 
 func randerAnsibleConfig() error {
 	tmpl := constant.AnsibleTemplateFilePath
-	file, err := os.OpenFile(constant.AnsibleConfPath, os.O_CREATE|os.O_RDWR, 0755)
+	file, err := os.OpenFile(constant.AnsibleConfPath, os.O_CREATE|os.O_RDWR, 0750)
 	if err != nil {
 		return err
 	}

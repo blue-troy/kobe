@@ -111,7 +111,7 @@ class CallbackModule(CallbackBase):
         }
 
         task_id = os.getenv("KO_TASK_ID")
-        os.makedirs(task_id, 0o755, True)
+        os.makedirs(task_id, 0o750, True)
         result_path = os.path.join(task_id, "result.json")
         with open(result_path, "w") as f:
             f.write(json.dumps(output, cls=AnsibleJSONEncoder, indent=4, sort_keys=True))

@@ -66,7 +66,7 @@ func (pm ProjectManager) IsProjectExists(name string) (bool, error) {
 
 func (pm ProjectManager) CreateProject(name, source string) (*api.Project, error) {
 	projectPath := path.Join(constant.ProjectDir, name)
-	if err := os.MkdirAll(projectPath, 0755); err != nil {
+	if err := os.MkdirAll(projectPath, 0750); err != nil {
 		return nil, err
 	}
 	if err := util.CloneRepository(source, projectPath); err != nil {
