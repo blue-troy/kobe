@@ -76,7 +76,7 @@ message RunPlaybookRequest {
 }
 
 message RunPlaybookResult {
-  Result result = 1;
+  KobeResult result = 1;
 }
 
 message RunAdhocRequest {
@@ -87,10 +87,10 @@ message RunAdhocRequest {
 }
 
 message RunAdhocResult{
-  Result result = 1;
+  KobeResult result = 1;
 }
 
-message Result {
+message KobeResult {
   string id = 1;
   string startTime = 2;
   string endTime = 3;
@@ -122,14 +122,14 @@ message GetResultRequest{
 }
 
 message GetResultResponse{
-  Result item = 1;
+  KobeResult item = 1;
 }
 
 message ListResultRequest{
 }
 
 message ListResultResponse{
-  repeated Result items = 1;
+  repeated KobeResult items = 1;
 }
 
 
