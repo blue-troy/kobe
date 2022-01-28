@@ -3,10 +3,11 @@ package project
 import (
 	"errors"
 	"fmt"
+	"log"
+
+	"github.com/KubeOperator/kobe/pkg/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/KubeOperator/kobe/pkg/client"
-	"log"
 )
 
 var projectCreateCmd = &cobra.Command{
@@ -15,7 +16,7 @@ var projectCreateCmd = &cobra.Command{
 		host := viper.GetString("server.host")
 		port := viper.GetInt("server.port")
 		c := client.NewKobeClient(host, port)
-		if len(args) < 0 {
+		if len(args) == 0 {
 			log.Fatal("invalid project source")
 		}
 		name, err := cmd.Flags().GetString("name")
@@ -30,7 +31,7 @@ var projectCreateCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(fmt.Sprintf("%s created", p.Name))
+		fmt.Printf("%s created \n", p.Name)
 	},
 }
 

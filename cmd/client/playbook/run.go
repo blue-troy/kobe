@@ -3,15 +3,16 @@ package playbook
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+	"time"
+
 	"github.com/KubeOperator/kobe/api"
 	"github.com/KubeOperator/kobe/pkg/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
-	"log"
-	"os"
-	"time"
 )
 
 var playbookRunCmd = &cobra.Command{
@@ -44,7 +45,7 @@ var playbookRunCmd = &cobra.Command{
 			log.Fatal("invalid playbook name")
 		}
 		playbook := args[0]
-		result, err := c.RunPlaybook(project, playbook, inventory)
+		result, err := c.RunPlaybook(project, playbook, "", &inventory)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -72,12 +73,10 @@ var playbookRunCmd = &cobra.Command{
 			if err != nil {
 				log.Fatal(err)
 			}
-			select {
-			case a := <-sign:
-				if a == 1 {
-					if !result.Success {
-						log.Fatal(result.Message)
-					}
+			a := <-sign
+			if a == 1 {
+				if !result.Success {
+					log.Fatal(result.Message)
 				}
 			}
 		}

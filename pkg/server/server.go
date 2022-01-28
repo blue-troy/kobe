@@ -4,15 +4,16 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/KubeOperator/kobe/api"
-	"github.com/KubeOperator/kobe/pkg/constant"
-	"github.com/patrickmn/go-cache"
-	uuid "github.com/satori/go.uuid"
 	"io/ioutil"
 	"log"
 	"os"
 	"path"
 	"time"
+
+	"github.com/KubeOperator/kobe/api"
+	"github.com/KubeOperator/kobe/pkg/constant"
+	"github.com/patrickmn/go-cache"
+	uuid "github.com/satori/go.uuid"
 )
 
 type Kobe struct {
@@ -68,22 +69,22 @@ func (k *Kobe) GetInventory(ctx context.Context, req *api.GetInventoryRequest) (
 func (k *Kobe) WatchResult(req *api.WatchRequest, server api.KobeApi_WatchResultServer) error {
 	ch, found := k.chCache.Get(req.TaskId)
 	if !found {
-		return errors.New(fmt.Sprintf("can not find task: %s", req.TaskId))
+		return fmt.Errorf("can not find task: %s", req.TaskId)
 	}
 	t, found := k.taskCache.Get(req.TaskId)
 	if !found {
-		return errors.New(fmt.Sprintf("can not find task: %s", req.TaskId))
+		return fmt.Errorf("can not find task: %s", req.TaskId)
 	}
 	tv, ok := t.(*api.Result)
 	if !ok {
-		return errors.New(fmt.Sprintf("invalid cache"))
+		return fmt.Errorf("invalid cache")
 	}
 	if tv.Finished {
-		return errors.New(fmt.Sprintf("task: %s already finished", req.TaskId))
+		return fmt.Errorf("task: %s already finished", req.TaskId)
 	}
 	val, ok := ch.(chan []byte)
 	if !ok {
-		return errors.New(fmt.Sprintf("invalid cache"))
+		return fmt.Errorf("invalid cache")
 	}
 	for buf := range val {
 		_ = server.Send(&api.WatchStream{
@@ -166,7 +167,7 @@ func (k *Kobe) GetResult(ctx context.Context, req *api.GetResultRequest) (*api.G
 	id := req.GetTaskId()
 	result, found := k.taskCache.Get(id)
 	if !found {
-		return nil, errors.New(fmt.Sprintf("can not find task: %s result", id))
+		return nil, fmt.Errorf("can not find task: %s result", id)
 	}
 	val, ok := result.(*api.Result)
 	if !ok {

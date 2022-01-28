@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/spf13/viper"
 	"github.com/prometheus/common/log"
+	"github.com/spf13/viper"
 )
 
 type TaskFunc func()
@@ -39,9 +39,7 @@ func (p *Pool) IsEmpty() bool {
 
 func (p *Pool) run() {
 	for {
-		select {
-		case task := <-p.taskQueue:
-			task()
-		}
+		task := <-p.taskQueue
+		task()
 	}
 }

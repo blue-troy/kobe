@@ -2,10 +2,11 @@ package task
 
 import (
 	"fmt"
+	"log"
+
+	"github.com/KubeOperator/kobe/pkg/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/KubeOperator/kobe/pkg/client"
-	"log"
 )
 
 var taskDescribeCmd = &cobra.Command{
@@ -22,13 +23,13 @@ var taskDescribeCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(fmt.Sprintf("id: %s", result.Id))
-		fmt.Println(fmt.Sprintf("star time: %s", result.StartTime))
-		fmt.Println(fmt.Sprintf("end time: %s", result.EndTime))
-		fmt.Println(fmt.Sprintf("finished: %t", result.Finished))
-		fmt.Println(fmt.Sprintf("success: %t", result.Success))
-		fmt.Println(fmt.Sprintf("message:%s", result.Message))
-		fmt.Println(fmt.Sprintf("content:"))
+		fmt.Printf("id: %s \n", result.Id)
+		fmt.Printf("star time: %s \n", result.StartTime)
+		fmt.Printf("end time: %s \n", result.EndTime)
+		fmt.Printf("finished: %t \n", result.Finished)
+		fmt.Printf("success: %t \n", result.Success)
+		fmt.Printf("message:%s \n", result.Message)
+		fmt.Printf("content: \n")
 		fmt.Println(result.Content)
 	},
 }

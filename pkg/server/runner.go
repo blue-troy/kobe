@@ -1,8 +1,8 @@
 package server
 
 import (
-	"errors"
 	"fmt"
+
 	"github.com/KubeOperator/kobe/pkg/ansible"
 	"github.com/patrickmn/go-cache"
 )
@@ -22,7 +22,7 @@ func (rm *RunnerManager) CreatePlaybookRunner(projectName, playbookName, tag str
 		return nil, err
 	}
 	return &ansible.PlaybookRunner{
-		Project:  *p,
+		Project:  p,
 		Playbook: playbookName,
 		Tag:      tag,
 	}, nil
@@ -50,7 +50,7 @@ func preRunPlaybook(projectName, playbookName string) error {
 		}
 	}
 	if !exists {
-		return errors.New(fmt.Sprintf("can not find playbook:%s in project:%s", playbookName, projectName))
+		return fmt.Errorf("can not find playbook:%s in project:%s", playbookName, projectName)
 	}
 	return nil
 }

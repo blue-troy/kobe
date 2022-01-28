@@ -3,16 +3,16 @@ package inventory
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
-	"github.com/KubeOperator/kobe/api"
-	"github.com/KubeOperator/kobe/pkg/constant"
-	uuid "github.com/satori/go.uuid"
-	"google.golang.org/grpc"
 	"io/ioutil"
 	"log"
 	"os"
 	"path"
+
+	"github.com/KubeOperator/kobe/api"
+	"github.com/KubeOperator/kobe/pkg/constant"
+	uuid "github.com/satori/go.uuid"
+	"google.golang.org/grpc"
 )
 
 type Result map[string]map[string]interface{}
@@ -73,7 +73,7 @@ func (kip kobeInventoryProvider) ListHandler() (Result, error) {
 		Vars:     inventory.Vars,
 	}
 	for _, group := range inventory.Groups {
-		m := parseGroupToMap(*group)
+		m := parseGroupToMap(group)
 		groups[group.Name] = m
 		all.Children = append(all.Children, group.Name)
 	}
@@ -105,13 +105,13 @@ func (kip kobeInventoryProvider) ListHandler() (Result, error) {
 			}
 		}
 	}
-	groups[all.Name] = parseGroupToMap(all)
+	groups[all.Name] = parseGroupToMap(&all)
 	meta["hostvars"] = hostVars
 	groups["_meta"] = meta
 	return groups, nil
 }
 
-func parseGroupToMap(group api.Group) map[string]interface{} {
+func parseGroupToMap(group *api.Group) map[string]interface{} {
 	m := map[string]interface{}{}
 	if group.Hosts != nil {
 		m["hosts"] = group.Hosts
@@ -134,7 +134,7 @@ func parseGroupToMap(group api.Group) map[string]interface{} {
 func (kip kobeInventoryProvider) getInventoryId() (string, error) {
 	id := os.Getenv(constant.TaskEnvKey)
 	if id == "" {
-		return "", errors.New(fmt.Sprintf("invalid id: %s", id))
+		return "", fmt.Errorf("invalid id: %s", id)
 	}
 	return id, nil
 }

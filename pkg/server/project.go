@@ -1,15 +1,15 @@
 package server
 
 import (
-	"errors"
 	"fmt"
-	"github.com/KubeOperator/kobe/api"
-	"github.com/KubeOperator/kobe/pkg/constant"
-	"github.com/KubeOperator/kobe/pkg/util"
 	"io/ioutil"
 	"os"
 	"path"
 	"strings"
+
+	"github.com/KubeOperator/kobe/api"
+	"github.com/KubeOperator/kobe/pkg/constant"
+	"github.com/KubeOperator/kobe/pkg/util"
 )
 
 type ProjectManager struct {
@@ -25,7 +25,7 @@ func (pm ProjectManager) GetProject(name string) (*api.Project, error) {
 			return p, nil
 		}
 	}
-	return nil, errors.New(fmt.Sprintf("can not find project:%s", name))
+	return nil, fmt.Errorf("can not find project:%s", name)
 }
 
 func (pm ProjectManager) SearchProjects() ([]*api.Project, error) {

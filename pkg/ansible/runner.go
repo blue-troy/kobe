@@ -3,20 +3,21 @@ package ansible
 import (
 	"bytes"
 	"fmt"
-	"github.com/KubeOperator/kobe/api"
-	"github.com/KubeOperator/kobe/pkg/constant"
-	"github.com/KubeOperator/kobe/pkg/util"
-	"github.com/prometheus/common/log"
 	"io"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path"
 	"time"
+
+	"github.com/KubeOperator/kobe/api"
+	"github.com/KubeOperator/kobe/pkg/constant"
+	"github.com/KubeOperator/kobe/pkg/util"
+	"github.com/prometheus/common/log"
 )
 
 type PlaybookRunner struct {
-	Project  api.Project
+	Project  *api.Project
 	Playbook string
 	Tag      string
 }
@@ -98,9 +99,9 @@ func runCmd(ch chan []byte, projectName string, cmd *exec.Cmd, result *api.Resul
 		result.Message = err.Error()
 		return
 	}
-	os.Chdir(workPath)
+	_ = os.Chdir(workPath)
 	defer func() {
-		os.Chdir(pwd)
+		_ = os.Chdir(pwd)
 		result.EndTime = time.Now().String()
 	}()
 	stderr := &bytes.Buffer{}

@@ -2,15 +2,16 @@ package adhoc
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+	"time"
+
 	"github.com/KubeOperator/kobe/api"
 	"github.com/KubeOperator/kobe/pkg/client"
 	"github.com/ghodss/yaml"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"io/ioutil"
-	"log"
-	"os"
-	"time"
 )
 
 var adhocRunCmd = &cobra.Command{
@@ -38,7 +39,7 @@ var adhocRunCmd = &cobra.Command{
 		if len(args) > 0 {
 			param = args[0]
 		}
-		result, err := c.RunAdhoc(pattern, module, param, inventory)
+		result, err := c.RunAdhoc(pattern, module, param, &inventory)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -66,12 +67,10 @@ var adhocRunCmd = &cobra.Command{
 			if err != nil {
 				log.Fatal(err)
 			}
-			select {
-			case a := <-sign:
-				if a == 1 {
-					if !result.Success {
-						log.Fatal(result.Message)
-					}
+			a := <-sign
+			if a == 1 {
+				if !result.Success {
+					log.Fatal(result.Message)
 				}
 			}
 		}
