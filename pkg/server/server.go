@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"strings"
 	"time"
 
 	"github.com/KubeOperator/kobe/api"
@@ -95,6 +96,9 @@ func (k *Kobe) WatchResult(req *api.WatchRequest, server api.KobeApi_WatchResult
 }
 
 func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.RunAdhocResult, error) {
+	if checkIllegal(req.Module) || checkIllegal(req.Pattern) {
+		return nil, errors.New("invalid characters exist")
+	}
 	rm := RunnerManager{
 		inventoryCache: k.inventoryCache,
 	}
@@ -126,6 +130,15 @@ func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.Run
 	return &api.RunAdhocResult{
 		Result: &result,
 	}, nil
+}
+
+func checkIllegal(cmdName string) bool {
+	if strings.Contains(cmdName, "&") || strings.Contains(cmdName, "|") || strings.Contains(cmdName, ";") ||
+		strings.Contains(cmdName, "$") || strings.Contains(cmdName, "'") || strings.Contains(cmdName, "`") ||
+		strings.Contains(cmdName, "(") || strings.Contains(cmdName, ")") || strings.Contains(cmdName, "\"") {
+		return true
+	}
+	return false
 }
 
 func (k *Kobe) RunPlaybook(ctx context.Context, req *api.RunPlaybookRequest) (*api.RunPlaybookResult, error) {
