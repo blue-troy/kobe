@@ -156,6 +156,7 @@ func generatePrivateKeyFile(hostName string, content string) string {
 		log.Println(err)
 		return ""
 	}
+	defer f.Close()
 	err = ioutil.WriteFile(f.Name(), []byte(content), 0600)
 	if err != nil {
 		log.Println(err)
