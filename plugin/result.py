@@ -113,10 +113,8 @@ class CallbackModule(CallbackBase):
         task_id = os.getenv("KO_TASK_ID")
         os.makedirs(task_id, 0o750, True)
         result_path = os.path.join(task_id, "result.json")
-
-        flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
-        mode = stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP
-        with open(result_path, "w") os.fdopen(os.open(result_path, flags, mode), 'w') as f:
+        open_flags = (os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        with os.fdopen(os.open(result_path, open_flags, 0o640), 'w') as f:
             f.write(json.dumps(output, cls=AnsibleJSONEncoder, indent=4, sort_keys=True))
 
     def _record_task_result(self, on_info, result, **kwargs):
