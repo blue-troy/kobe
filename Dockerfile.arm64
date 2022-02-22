@@ -35,6 +35,8 @@ COPY --from=stage-build /build/kobe/dist/var /var/
 
 RUN echo 'kobe-server' >> /root/entrypoint.sh
 
+RUN chmod 550 /root/entrypoint.sh /usr/local/bin/kobe-server /usr/local/bin/kobe-inventory
+
 VOLUME ["/var/kobe/data"]
 
 EXPOSE 8080
