@@ -55,7 +55,8 @@ var adhocRunCmd = &cobra.Command{
 				for {
 					result, err = c.GetResult(result.Id)
 					if err != nil {
-						log.Fatal(err)
+						log.Print(err)
+						break
 					}
 					if result.Finished {
 						sign <- 1

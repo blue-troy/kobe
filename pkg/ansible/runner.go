@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"strings"
 	"time"
 
 	"github.com/KubeOperator/kobe/api"
@@ -41,9 +42,12 @@ func (a *AdhocRunner) Run(ch chan []byte, result *api.KobeResult) {
 		result.Message = err.Error()
 		return
 	}
-	cmd := exec.Command(ansiblePath,
-		"-e", "host_key_checking=False",
-		"-i", inventoryProviderPath, a.Pattern, "-m", a.Module)
+	if checkIllegal(ansiblePath, inventoryProviderPath, a.Pattern, a.Module) {
+		result.Success = false
+		result.Message = "license contains invalid characters!"
+		return
+	}
+	cmd := exec.Command(ansiblePath, "-e", "host_key_checking=False", "-i", inventoryProviderPath, a.Pattern, "-m", a.Module)
 	if a.Param != "" {
 		cmd.Args = append(cmd.Args, "-a", a.Param)
 	}
@@ -69,9 +73,13 @@ func (p *PlaybookRunner) Run(ch chan []byte, result *api.KobeResult) {
 		return
 	}
 
-	cmd := exec.Command(ansiblePath,
-		"-i", inventoryProviderPath,
-		path.Join(constant.ProjectDir, p.Project.Name, p.Playbook))
+	itemPath := path.Join(constant.ProjectDir, p.Project.Name, p.Playbook)
+	if checkIllegal(ansiblePath, inventoryProviderPath, itemPath) {
+		result.Success = false
+		result.Message = "license contains invalid characters!"
+		return
+	}
+	cmd := exec.Command(ansiblePath, "-i", inventoryProviderPath, itemPath)
 	varPath := path.Join(constant.ProjectDir, p.Project.Name, constant.AnsibleVariablesName)
 	exists, _ := util.PathExists(varPath)
 	if exists {
@@ -89,6 +97,9 @@ func (p *PlaybookRunner) Run(ch chan []byte, result *api.KobeResult) {
 }
 
 func runCmd(ch chan []byte, projectName string, cmd *exec.Cmd, result *api.KobeResult) {
+	if ch == nil {
+		return
+	}
 	workPath, err := initWorkSpace(projectName)
 	if err != nil {
 		result.Message = err.Error()
@@ -99,9 +110,14 @@ func runCmd(ch chan []byte, projectName string, cmd *exec.Cmd, result *api.KobeR
 		result.Message = err.Error()
 		return
 	}
-	_ = os.Chdir(workPath)
+	if err := os.Chdir(workPath); err != nil {
+		result.Message = err.Error()
+		return
+	}
 	defer func() {
-		_ = os.Chdir(pwd)
+		if err := os.Chdir(pwd); err != nil {
+			result.Message = err.Error()
+		}
 		result.EndTime = time.Now().String()
 	}()
 	stderr := &bytes.Buffer{}
@@ -150,4 +166,18 @@ func initWorkSpace(projectName string) (string, error) {
 		return "", err
 	}
 	return workPath, nil
+}
+
+func checkIllegal(args ...string) bool {
+	if args == nil {
+		return false
+	}
+	for _, arg := range args {
+		if strings.Contains(arg, "&") || strings.Contains(arg, "|") || strings.Contains(arg, ";") ||
+			strings.Contains(arg, "$") || strings.Contains(arg, "'") || strings.Contains(arg, "`") ||
+			strings.Contains(arg, "(") || strings.Contains(arg, ")") || strings.Contains(arg, "\"") {
+			return true
+		}
+	}
+	return false
 }

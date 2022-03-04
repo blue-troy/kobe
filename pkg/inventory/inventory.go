@@ -59,7 +59,10 @@ func (kip kobeInventoryProvider) ListHandler() (Result, error) {
 	if err != nil {
 		return nil, err
 	}
-	inventory, _ := kip.getInventory(id)
+	inventory, err := kip.getInventory(id)
+	if err != nil {
+		return nil, err
+	}
 
 	if inventory == nil {
 		return nil, fmt.Errorf("can not find inventory in cache invalid taskId %s", id)
@@ -81,29 +84,25 @@ func (kip kobeInventoryProvider) ListHandler() (Result, error) {
 	hostVars := map[string]interface{}{}
 	for _, host := range inventory.Hosts {
 		all.Hosts = append(all.Hosts, host.Name)
-		hostVars[host.Name] = map[string]interface{}{
-			"ansible_ssh_host": host.Ip,
-			"ansible_ssh_port": host.Port,
-			"ansible_ssh_user": host.User,
-		}
+		m1 := make(map[string]interface{})
+		m1["ansible_ssh_host"] = host.Ip
+		m1["ansible_ssh_port"] = host.Port
+		m1["ansible_ssh_user"] = host.User
 		if host.Password != "" {
-			m := hostVars[host.Name].(map[string]interface{})
-			m["ansible_ssh_pass"] = host.Password
+			m1["ansible_ssh_pass"] = host.Password
 		}
 		if host.PrivateKey != "" {
-			m := hostVars[host.Name].(map[string]interface{})
-			m["ansible_ssh_private_key_file"] = generatePrivateKeyFile(host.Name, host.PrivateKey)
+			m1["ansible_ssh_private_key_file"] = generatePrivateKeyFile(host.Name, host.PrivateKey)
 		}
 		if host.ProxyConfig != nil && host.ProxyConfig.Enable {
-			m := hostVars[host.Name].(map[string]interface{})
-			m["ansible_ssh_common_args"] = fmt.Sprintf("-o ProxyCommand=\"sshpass -p %s ssh -W  %%h:%%p -p %d -q %s@%s\" -o StrictHostKeyChecking=no", host.ProxyConfig.Password, host.ProxyConfig.Port, host.ProxyConfig.User, host.ProxyConfig.Ip)
+			m1["ansible_ssh_common_args"] = fmt.Sprintf("-o ProxyCommand=\"sshpass -p %s ssh -W  %%h:%%p -p %d -q %s@%s\" -o StrictHostKeyChecking=no", host.ProxyConfig.Password, host.ProxyConfig.Port, host.ProxyConfig.User, host.ProxyConfig.Ip)
 		}
 		if host.Vars != nil {
-			m := hostVars[host.Name].(map[string]interface{})
 			for k, v := range host.Vars {
-				m[k] = v
+				m1[k] = v
 			}
 		}
+		hostVars[host.Name] = m1
 	}
 	groups[all.Name] = parseGroupToMap(&all)
 	meta["hostvars"] = hostVars
@@ -153,7 +152,6 @@ func generatePrivateKeyFile(hostName string, content string) string {
 	p := path.Join(constant.KeyDir, fileName)
 	f, err := os.OpenFile(p, os.O_CREATE, 0600)
 	if err != nil {
-		log.Println(err)
 		return ""
 	}
 	defer f.Close()

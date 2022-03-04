@@ -62,7 +62,9 @@ func lookUpKobeInventoryBinPath() error {
 }
 
 func cleanWorkPath() error {
-	_ = os.RemoveAll(constant.WorkDir)
+	if err := os.RemoveAll(constant.WorkDir); err != nil {
+		return err
+	}
 	return nil
 }
 

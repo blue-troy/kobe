@@ -15,6 +15,12 @@ type Pool struct {
 func NewPool() *Pool {
 	workerSize := viper.GetInt("app.worker")
 	queueSize := viper.GetInt("app.queue")
+	if queueSize < 1 {
+		queueSize = 1
+	}
+	if workerSize < 1 {
+		workerSize = 1
+	}
 	p := &Pool{taskQueue: make(chan TaskFunc, queueSize), workerSize: workerSize}
 	for i := 0; i < p.workerSize; i++ {
 		go p.run()
