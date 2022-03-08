@@ -9,6 +9,7 @@ type TaskFunc func()
 
 type Pool struct {
 	taskQueue  chan TaskFunc
+	stopChan   chan struct{}
 	workerSize int
 }
 
@@ -21,7 +22,7 @@ func NewPool() *Pool {
 	if workerSize < 1 {
 		workerSize = 1
 	}
-	p := &Pool{taskQueue: make(chan TaskFunc, queueSize), workerSize: workerSize}
+	p := &Pool{taskQueue: make(chan TaskFunc, queueSize), stopChan: make(chan struct{}), workerSize: workerSize}
 	for i := 0; i < p.workerSize; i++ {
 		go p.run()
 	}
@@ -45,7 +46,11 @@ func (p *Pool) IsEmpty() bool {
 
 func (p *Pool) run() {
 	for {
-		task := <-p.taskQueue
-		task()
+		select {
+		case task := <-p.taskQueue:
+			task()
+		case <-p.stopChan:
+			break
+		}
 	}
 }

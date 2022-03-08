@@ -8,7 +8,6 @@ import (
 	"os"
 	"os/exec"
 	"path"
-	"strings"
 	"time"
 
 	"github.com/KubeOperator/kobe/api"
@@ -42,7 +41,7 @@ func (a *AdhocRunner) Run(ch chan []byte, result *api.KobeResult) {
 		result.Message = err.Error()
 		return
 	}
-	if checkIllegal(ansiblePath, inventoryProviderPath, a.Pattern, a.Module) {
+	if util.CheckIllegal(ansiblePath, inventoryProviderPath, a.Pattern, a.Module) {
 		result.Success = false
 		result.Message = "license contains invalid characters!"
 		return
@@ -74,7 +73,7 @@ func (p *PlaybookRunner) Run(ch chan []byte, result *api.KobeResult) {
 	}
 
 	itemPath := path.Join(constant.ProjectDir, p.Project.Name, p.Playbook)
-	if checkIllegal(ansiblePath, inventoryProviderPath, itemPath) {
+	if util.CheckIllegal(ansiblePath, inventoryProviderPath, itemPath) {
 		result.Success = false
 		result.Message = "license contains invalid characters!"
 		return
@@ -166,18 +165,4 @@ func initWorkSpace(projectName string) (string, error) {
 		return "", err
 	}
 	return workPath, nil
-}
-
-func checkIllegal(args ...string) bool {
-	if args == nil {
-		return false
-	}
-	for _, arg := range args {
-		if strings.Contains(arg, "&") || strings.Contains(arg, "|") || strings.Contains(arg, ";") ||
-			strings.Contains(arg, "$") || strings.Contains(arg, "'") || strings.Contains(arg, "`") ||
-			strings.Contains(arg, "(") || strings.Contains(arg, ")") || strings.Contains(arg, "\"") {
-			return true
-		}
-	}
-	return false
 }
