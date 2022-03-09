@@ -1,6 +1,8 @@
 package server
 
 import (
+	"time"
+
 	"github.com/prometheus/common/log"
 	"github.com/spf13/viper"
 )
@@ -8,9 +10,9 @@ import (
 type TaskFunc func()
 
 type Pool struct {
-	taskQueue  chan TaskFunc
-	stopChan   chan struct{}
-	workerSize int
+	taskQueue     chan TaskFunc
+	workerSize    int
+	goroutineChan chan struct{}
 }
 
 func NewPool() *Pool {
@@ -22,10 +24,7 @@ func NewPool() *Pool {
 	if workerSize < 1 {
 		workerSize = 1
 	}
-	p := &Pool{taskQueue: make(chan TaskFunc, queueSize), stopChan: make(chan struct{}), workerSize: workerSize}
-	for i := 0; i < p.workerSize; i++ {
-		go p.run()
-	}
+	p := &Pool{taskQueue: make(chan TaskFunc, queueSize), workerSize: workerSize, goroutineChan: make(chan struct{}, workerSize)}
 	return p
 }
 
@@ -33,7 +32,9 @@ func (p *Pool) Commit(taskFunc TaskFunc) {
 	log.Infof("receive a task")
 	log.Infof("current worker size: %d", p.workerSize)
 	log.Infof("task queue size: %d", p.Len())
+	log.Infof("current goroutine size: %d", len(p.goroutineChan))
 	p.taskQueue <- taskFunc
+	go p.setUp()
 }
 
 func (p *Pool) Len() int {
@@ -44,13 +45,19 @@ func (p *Pool) IsEmpty() bool {
 	return len(p.taskQueue) == 0
 }
 
+func (p *Pool) setUp() {
+	p.goroutineChan <- struct{}{}
+	go p.run()
+}
+
 func (p *Pool) run() {
-	for {
-		select {
-		case task := <-p.taskQueue:
-			task()
-		case <-p.stopChan:
-			break
-		}
+	defer func() {
+		<-p.goroutineChan
+	}()
+	select {
+	case task := <-p.taskQueue:
+		task()
+	case <-time.After(time.Hour * 1):
+		break
 	}
 }
