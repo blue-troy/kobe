@@ -79,6 +79,10 @@ COPY --from=stage-build /build/kobe/dist/etc /etc/
 COPY --from=stage-build /build/kobe/dist/usr /usr/
 COPY --from=stage-build /build/kobe/dist/var /var/
 
+RUN mkdir /var/kobe/conf -p
+COPY conf/kobe.k /var/kobe/conf
+COPY conf/kobe.p /var/kobe/conf
+
 RUN echo 'kobe-server' >> /root/entrypoint.sh
 
 RUN chmod 550 /root/entrypoint.sh /usr/local/bin/kobe-server /usr/local/bin/kobe-inventory
