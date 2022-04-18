@@ -80,8 +80,8 @@ COPY --from=stage-build /build/kobe/dist/usr /usr/
 COPY --from=stage-build /build/kobe/dist/var /var/
 
 RUN mkdir /var/kobe/conf -p
-COPY conf/kobe.k /var/kobe/conf
-COPY conf/kobe.p /var/kobe/conf
+COPY conf/server.key /var/kobe/conf
+COPY conf/server.pem /var/kobe/conf
 
 RUN echo 'kobe-server' >> /root/entrypoint.sh
 

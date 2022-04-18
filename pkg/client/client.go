@@ -161,12 +161,12 @@ func (c *KobeClient) ListResult() ([]*api.KobeResult, error) {
 
 func (k *KobeClient) createConnection() (*grpc.ClientConn, error) {
 	address := fmt.Sprintf("%s:%d", k.host, k.port)
-	c, err := credentials.NewClientTLSFromFile("/var/kobe/conf/server.pem", "go-grpc-example")
+	c, err := credentials.NewClientTLSFromFile("/var/kobe/conf/server.pem", "kobe")
 	if err != nil {
 		log.Fatalf("credentials.NewClientTLSFromFile err: %v", err)
 	}
 
-	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithTransportCredentials(c), grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(100*1024*1024)))
+	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(c), grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(100*1024*1024)))
 	if err != nil {
 		return nil, err
 	}
