@@ -6,8 +6,8 @@ import (
 
 	"github.com/KubeOperator/kobe/api"
 	"github.com/KubeOperator/kobe/pkg/server"
+	"github.com/KubeOperator/kobe/pkg/util"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
 )
 
 func newTcpListener(address string) (*net.Listener, error) {
@@ -18,7 +18,7 @@ func newTcpListener(address string) (*net.Listener, error) {
 	return &s, nil
 }
 func newServer() *grpc.Server {
-	c, err := credentials.NewServerTLSFromFile("/var/kobe/conf/server.pem", "/var/kobe/conf/server.key")
+	c, err := util.NewServerTLSFromFile("/var/kobe/conf/server.pem", "/var/kobe/conf/server.key")
 	if err != nil {
 		log.Fatalf("credentials.NewServerTLSFromFile err: %v", err)
 	}

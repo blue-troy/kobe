@@ -7,8 +7,8 @@ import (
 	"log"
 
 	"github.com/KubeOperator/kobe/api"
+	"github.com/KubeOperator/kobe/pkg/util"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
 )
 
 func NewKobeClient(host string, port int) *KobeClient {
@@ -161,7 +161,7 @@ func (c *KobeClient) ListResult() ([]*api.KobeResult, error) {
 
 func (k *KobeClient) createConnection() (*grpc.ClientConn, error) {
 	address := fmt.Sprintf("%s:%d", k.host, k.port)
-	c, err := credentials.NewClientTLSFromFile("/var/kobe/conf/server.pem", "kobe")
+	c, err := util.NewClientTLSFromFile("/var/kobe/conf/server.pem", "kobe")
 	if err != nil {
 		log.Fatalf("credentials.NewClientTLSFromFile err: %v", err)
 	}
