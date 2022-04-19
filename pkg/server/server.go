@@ -121,9 +121,11 @@ func (k *Kobe) RunAdhoc(ctx context.Context, req *api.RunAdhocRequest) (*api.Run
 		return nil, err
 	}
 	task := func() {
+		log.Printf("start to run adhoc at %s", time.Now().Format("2006-01-02 15:04:05"))
 		runner.Run(ch, &result)
 		result.Finished = true
 		result.EndTime = time.Now().Format("2006-01-02 15:04:05")
+		log.Printf("run adhoc successful at %s", time.Now().Format("2006-01-02 15:04:05"))
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 	}
 	k.pool.Commit(task)
@@ -156,9 +158,11 @@ func (k *Kobe) RunPlaybook(ctx context.Context, req *api.RunPlaybookRequest) (*a
 		return nil, err
 	}
 	b := func() {
+		log.Printf("start to run playbook at %s", time.Now().Format("2006-01-02 15:04:05"))
 		runner.Run(ch, &result)
 		result.Finished = true
 		result.EndTime = time.Now().Format("2006-01-02 15:04:05")
+		log.Printf("start to run playbook at %s", time.Now().Format("2006-01-02 15:04:05"))
 		k.taskCache.Set(result.Id, &result, cache.DefaultExpiration)
 	}
 	k.pool.Commit(b)

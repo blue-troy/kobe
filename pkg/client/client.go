@@ -74,6 +74,7 @@ func (c KobeClient) RunPlaybook(project, playbook, tag string, inventory *api.In
 	if err != nil {
 		return nil, err
 	}
+	log.Printf("run playbook %s-%s successful, result: %v", project, playbook, req)
 	return req.Result, nil
 }
 
@@ -94,6 +95,7 @@ func (c KobeClient) RunAdhoc(pattern, module, param string, inventory *api.Inven
 	if err != nil {
 		return nil, err
 	}
+	log.Printf("run adhoc successful, result: %v", req)
 	return req.Result, nil
 }
 
@@ -163,7 +165,8 @@ func (k *KobeClient) createConnection() (*grpc.ClientConn, error) {
 	address := fmt.Sprintf("%s:%d", k.host, k.port)
 	c, err := util.NewClientTLSFromFile("/var/kobe/conf/server.pem", "kobe")
 	if err != nil {
-		log.Fatalf("credentials.NewClientTLSFromFile err: %v", err)
+		log.Printf("credentials.NewClientTLSFromFile err: %v", err)
+		return nil, err
 	}
 
 	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(c), grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(100*1024*1024)))
