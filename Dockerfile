@@ -14,16 +14,7 @@ RUN go mod download
 COPY . .
 RUN make build_server_linux GOARCH=$GOARCH
 
-FROM kubeoperator/euleros:2.1
-
-RUN echo > /etc/yum.repos.d/Euler-Base.repo \
-    && echo -e "[base]\nname=EulerOS-2.0SP8 base\nbaseurl=http://repo.huaweicloud.com/euler/2.8/os/aarch64/\nenabled=1\ngpgcheck=1\ngpgkey=http://repo.huaweicloud.com/euler/2.8/os/RPM-GPG-KEY-EulerOS" >> /etc/yum.repos.d/Euler-Base.repo \
-    && curl -sSLo /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo \
-    && yum install -y python3-pip sshpass \
-    && pip3 install -U pip \
-    && pip3 install --no-cache-dir ansible==2.10.4 netaddr \
-    && yum clean all \
-    && rm -rf /var/cache/yum/*
+FROM kubeoperator/kobe:euler2sp10-20220111
 
 RUN mkdir /root/.ssh  \
     && touch /root/.ssh/config \
