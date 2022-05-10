@@ -39,6 +39,10 @@ RUN chmod 550 /root/entrypoint.sh /usr/local/bin/kobe-server /usr/local/bin/kobe
 
 VOLUME ["/var/kobe/data"]
 
+RUN mkdir /var/kobe/conf -p
+COPY conf/server.k /var/kobe/conf
+COPY conf/server.p /var/kobe/conf
+
 EXPOSE 8080
 
 CMD ["sh","/root/entrypoint.sh"]
