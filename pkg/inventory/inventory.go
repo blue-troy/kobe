@@ -11,6 +11,7 @@ import (
 
 	"github.com/KubeOperator/kobe/api"
 	"github.com/KubeOperator/kobe/pkg/constant"
+	"github.com/KubeOperator/kobe/pkg/util"
 	uuid "github.com/satori/go.uuid"
 	"google.golang.org/grpc"
 )
@@ -140,7 +141,11 @@ func (kip kobeInventoryProvider) getInventoryId() (string, error) {
 
 func (kip kobeInventoryProvider) createConnection() (*grpc.ClientConn, error) {
 	address := fmt.Sprintf("%s:%d", kip.host, kip.port)
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	cre, err := util.NewClientTLSFromFile("/var/kobe/conf/server.p", "kubeoperator.io")
+	if err != nil {
+		fmt.Printf("credentials.NewClientTLSFromFile err: %v", err)
+	}
+	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(cre))
 	if err != nil {
 		return nil, err
 	}

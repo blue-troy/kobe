@@ -6,6 +6,7 @@ import (
 	"io"
 
 	"github.com/KubeOperator/kobe/api"
+	"github.com/KubeOperator/kobe/pkg/util"
 	"google.golang.org/grpc"
 )
 
@@ -159,7 +160,11 @@ func (c *KobeClient) ListResult() ([]*api.KobeResult, error) {
 
 func (c *KobeClient) createConnection() (*grpc.ClientConn, error) {
 	address := fmt.Sprintf("%s:%d", c.host, c.port)
-	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(100*1024*1024)))
+	cre, err := util.NewClientTLSFromFile("/var/kobe/conf/server.p", "kubeoperator.io")
+	if err != nil {
+		fmt.Printf("credentials.NewClientTLSFromFile err: %v", err)
+	}
+	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(cre), grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(100*1024*1024)))
 	if err != nil {
 		return nil, err
 	}
