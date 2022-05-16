@@ -13,5 +13,5 @@ require (
 	github.com/spf13/viper v1.4.0
 	google.golang.org/grpc v1.29.1
 	google.golang.org/protobuf v1.25.0
-	gopkg.in/yaml.v2 v2.2.4
+	gopkg.in/yaml.v2 v2.2.8
 )
