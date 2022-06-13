@@ -8,3 +8,4 @@ app:
 ansible:
   timeout: 10
   forks: 20
+  gather_subset: !hardware
